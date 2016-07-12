@@ -45,14 +45,14 @@ class GmailFilter
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getConditions() {
         return $this->conditions;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getLabels() {
         return $this->labels;
@@ -79,10 +79,26 @@ class GmailFilter
         return $this->neverSpam;
     }
 
+    /**
+     * Condition based on words within the email.
+     *
+     * @param string $value
+     *   The value to compare against.
+     *
+     * @return $this
+     */
     public function contains($value) {
         return $this->condition('hasTheWord', $value);
     }
 
+    /**
+     * Condition based on the subject.
+     *
+     * @param string $value
+     *   The value to compare against.
+     *
+     * @return $this
+     */
     public function subject($value) {
         return $this->condition('subject', $value);
     }
