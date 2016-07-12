@@ -12,11 +12,30 @@ class GmailFilter
      */
     private $labels = [];
 
+    /**
+     * @var bool
+     */
     private $archive = false;
 
+    /**
+     * @var bool
+     */
     private $spam = false;
 
+    /**
+     * @var bool
+     */
     private $trash = false;
+
+    /**
+     * @var bool
+     */
+    private $neverSpam = false;
+
+    public static function create()
+    {
+        return new static();
+    }
 
     /**
      * @return boolean
@@ -24,8 +43,6 @@ class GmailFilter
     public function isTrash() {
         return $this->trash;
     }
-
-    private $neverSpam = false;
 
     /**
      * @return mixed
@@ -60,15 +77,6 @@ class GmailFilter
      */
     public function isNeverSpam() {
         return $this->neverSpam;
-    }
-
-    public function __get($name) {
-        return $this->$name;
-    }
-
-    public static function create()
-    {
-        return new static();
     }
 
     public function contains($value) {
