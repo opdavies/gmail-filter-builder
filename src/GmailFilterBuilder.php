@@ -13,7 +13,7 @@ class GmailFilterBuilder
     private $email;
 
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     private $twig;
 
@@ -27,7 +27,7 @@ class GmailFilterBuilder
     public function __construct(array $filters)
     {
         $this->twig = new Twig_Environment(
-            new Twig_Loader_Filesystem(__DIR__ . '/../templates')
+            new Twig_Loader_Filesystem(__DIR__.'/../templates')
         );
 
         $this->filters = $filters;
@@ -53,9 +53,9 @@ class GmailFilterBuilder
         return new static($filters);
     }
 
-  /**
-   * @return string
-   */
+    /**
+     * @return string
+     */
     private function generate()
     {
         return $this->twig->render(
