@@ -4,9 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ee4a05d220006a064b4fda49803c239b",
-    "content-hash": "e796f90e007457e383570e7ae0e15248",
+    "hash": "d179d6e4dbbcaeaed647cc67ab4cea30",
+    "content-hash": "cb46a91710b83e4adc6b589f826e282e",
     "packages": [
+        {
+            "name": "opdavies/twig-extensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opdavies/twig-extensions.git",
+                "reference": "6ded44f2cfb250a6049cbbccf9709f1a725097f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/6ded44f2cfb250a6049cbbccf9709f1a725097f8",
+                "reference": "6ded44f2cfb250a6049cbbccf9709f1a725097f8",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^1.24"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Opdavies\\Twig\\Extensions\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Davies",
+                    "email": "oliver@oliverdavies.uk",
+                    "homepage": "https://www.oliverdavies.uk"
+                }
+            ],
+            "description": "A collection of personal Twig extensions.",
+            "time": "2016-07-15 01:40:58"
+        },
         {
             "name": "twig/twig",
             "version": "v1.24.1",
@@ -72,7 +109,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "opdavies/twig-extensions": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

@@ -8,9 +8,9 @@
             <category term='filter'></category>
             <title>Mail Filter</title>
             <content></content>
-            <apps:property name='shouldArchive' value='{{ filter.isArchive ? 'true' : 'false' }}'/>
-            <apps:property name='shouldNeverSpam' value='{{ filter.isNeverSpam ? 'true' : 'false' }}'/>
-            <apps:property name='shouldTrash' value='{{ filter.isTrash ? 'true' : 'false' }}'/>
+            <apps:property name='shouldArchive' value='{{ filter.isArchive|boolean_string }}'/>
+            <apps:property name='shouldNeverSpam' value='{{ filter.isNeverSpam|boolean_string }}'/>
+            <apps:property name='shouldTrash' value='{{ filter.isTrash|boolean_string }}'/>
             {% for condition in filter.conditions -%}
                 <apps:property name='{{ condition[0] }}' value='{{ condition[1] }}'/>
             {%- endfor %}

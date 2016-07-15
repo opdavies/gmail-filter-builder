@@ -1,5 +1,7 @@
 <?php
 
+use Opdavies\Twig\Extensions\TwigBooleanStringExtension;
+
 class GmailFilterBuilder
 {
     /**
@@ -29,6 +31,8 @@ class GmailFilterBuilder
         $this->twig = new Twig_Environment(
             new Twig_Loader_Filesystem(__DIR__.'/../templates')
         );
+
+        $this->twig->addExtension(new TwigBooleanStringExtension());
 
         $this->filters = $filters;
 
