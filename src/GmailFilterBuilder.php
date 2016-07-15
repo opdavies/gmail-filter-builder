@@ -24,11 +24,8 @@ class GmailFilterBuilder
      */
     private $filters = [];
 
-    public function __construct($name, $email, $filters)
+    public function __construct(array $filters)
     {
-        $this->name = $name;
-        $this->email = $email;
-
         $this->twig = new Twig_Environment(
             new Twig_Loader_Filesystem(__DIR__ . '/../templates')
         );
@@ -46,18 +43,14 @@ class GmailFilterBuilder
     /**
      * Build Gmail filters.
      *
-     * @param string $name
-     *   The author name.
-     * @param string $email
-     *   The author email address.
      * @param GmailFilter[] $filters
      *   An array of filters to process.
      *
      * @return $this
      */
-    public static function build($name, $email, array $filters)
+    public static function build(array $filters)
     {
-        return new static($name, $email, $filters);
+        return new static($filters);
     }
 
   /**
