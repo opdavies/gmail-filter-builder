@@ -181,6 +181,18 @@ class GmailFilter
     }
 
     /**
+     * Mark a message to be trashed.
+     *
+     * @return $this
+     */
+    public function trash()
+    {
+        $this->trash = TRUE;
+
+        return $this;
+    }
+
+    /**
      * Add a condition.
      *
      * @param string $type
