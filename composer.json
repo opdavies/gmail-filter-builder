@@ -14,6 +14,6 @@
     }
   },
   "require": {
-    "opdavies/twig-extensions": "dev-master"
+    "opdavies/twig-extensions": "^1.1"
   }
 }

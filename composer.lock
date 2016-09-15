@@ -4,27 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d179d6e4dbbcaeaed647cc67ab4cea30",
-    "content-hash": "cb46a91710b83e4adc6b589f826e282e",
+    "hash": "39f660ebb5c00de16fd3af95d01593bc",
+    "content-hash": "d3fd7fcb87ae95dbd6ab6f2569f8386d",
     "packages": [
         {
             "name": "opdavies/twig-extensions",
-            "version": "dev-master",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opdavies/twig-extensions.git",
-                "reference": "6ded44f2cfb250a6049cbbccf9709f1a725097f8"
+                "reference": "4d1593523fdf1756a54a148645b2f4bf2afecb75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/6ded44f2cfb250a6049cbbccf9709f1a725097f8",
-                "reference": "6ded44f2cfb250a6049cbbccf9709f1a725097f8",
+                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/4d1593523fdf1756a54a148645b2f4bf2afecb75",
+                "reference": "4d1593523fdf1756a54a148645b2f4bf2afecb75",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "^1.24"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Opdavies\\Twig\\Extensions\\": "src"
@@ -42,20 +47,20 @@
                 }
             ],
             "description": "A collection of personal Twig extensions.",
-            "time": "2016-07-15 01:40:58"
+            "time": "2016-09-14 21:35:45"
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.1",
+            "version": "v1.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
                 "shasum": ""
             },
             "require": {
@@ -103,15 +108,13 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-05-30 09:11:59"
+            "time": "2016-09-01 17:50:53"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "opdavies/twig-extensions": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
