@@ -15,5 +15,10 @@
   },
   "require": {
     "opdavies/twig-extensions": "^1.1"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1-dev"
+    }
   }
 }
