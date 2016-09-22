@@ -160,7 +160,7 @@ class GmailFilter
      */
     public function from(array $values)
     {
-        $this->condition('from', implode('||', $values));
+        $this->condition('from', implode(' OR ', $values));
 
         return $this;
     }
@@ -175,7 +175,7 @@ class GmailFilter
      */
     public function to(array $values)
     {
-        $this->condition('to', implode('||', $values));
+        $this->condition('to', implode(' OR ', $values));
 
         return $this;
     }
