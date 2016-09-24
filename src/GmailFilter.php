@@ -118,6 +118,21 @@ class GmailFilter
     }
 
     /**
+     * Label and archive a message.
+     *
+     * @param string $label
+     *   The label to assign.
+     *
+     * @return $this
+     */
+    public function labelAndArchive($label)
+    {
+        $this->label($label)->archive();
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function archive() {
