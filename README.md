@@ -17,12 +17,12 @@ require __DIR__ . '/vendor/autoload.php';
 $filters = [];
 
 // Add filters.
-$filters[] = GmailFilter::create();
-
-...
+$filters[] = GmailFilter::create(
+    ...
+);
 
 // Display the output.
-print GmailFilterBuilder($filters);
+new GmailFilterBuilder($filters);
 ```
 
 To generate the output, run PHP on the file - e.g. `php generate.php`.
