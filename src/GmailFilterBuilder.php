@@ -62,7 +62,9 @@ class GmailFilterBuilder
      */
     private function generate()
     {
-        return $this->twig->render(
+        ob_start();
+
+        print $this->twig->render(
             'filters.xml.twig',
             [
                 'name' => $this->name,
@@ -70,5 +72,7 @@ class GmailFilterBuilder
                 'filters' => $this->filters,
             ]
         );
+
+        return ob_get_contents();
     }
 }
