@@ -2,7 +2,6 @@
 
 class GmailFilterTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var GmailFilter
      */
@@ -42,5 +41,4 @@ class GmailFilterTest extends \PHPUnit_Framework_TestCase
     private function createBuilder($filters) {
         return (string) new GmailFilterBuilder($filters);
     }
-
 }
