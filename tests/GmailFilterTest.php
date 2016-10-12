@@ -2,23 +2,45 @@
 
 class GmailFilterTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @var GmailFilter
+     */
+    private $filter;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp() {
+        parent::setUp();
+
+        $this->filter = new GmailFilter();
+    }
+
     public function testSingleFrom() {
-        $filters[] = GmailFilter::create()
-            ->from(['foo@example.com']);
-
         // TODO: Does this need to be done each time?
-        $builder = (string) new GmailFilterBuilder($filters);
+        $output = $this->createBuilder([
+            $this->filter->from(['foo@example.com'])
+        ]);
 
-        $this->assertContains('<apps:property name=\'from\' value=\'foo@example.com\'/>', $builder);
+        $this->assertContains('<apps:property name=\'from\' value=\'foo@example.com\'/>', $output);
     }
 
     public function testMultipleFrom() {
-        $filters[] = GmailFilter::create()
-            ->from(['foo@example.com', 'bar@example.com']);
+        $output = $this->createBuilder([
+            $this->filter->from(['foo@example.com', 'bar@example.com'])
+        ]);
 
-        // TODO: Does this need to be done each time?
-        $builder = (string) new GmailFilterBuilder($filters);
-
-        $this->assertContains('<apps:property name=\'from\' value=\'foo@example.com OR bar@example.com\'/>', $builder);
+        $this->assertContains('<apps:property name=\'from\' value=\'foo@example.com OR bar@example.com\'/>', $output);
     }
+
+    /**
+     * @param GmailFilter[] $filters An array of filters.
+     *
+     * @return string A string representation of GmailFilterBuilder.
+     */
+    private function createBuilder($filters) {
+        return (string) new GmailFilterBuilder($filters);
+    }
+
 }
