@@ -22,7 +22,7 @@ class GmailFilterTest extends \PHPUnit_Framework_TestCase
             $this->filter->from(['foo@example.com'])
         ]);
 
-        $this->assertContains('<apps:property name=\'from\' value=\'foo@example.com\'/>', $output);
+        $this->assertContains('name=\'from\' value=\'foo@example.com\'', $output);
     }
 
     public function testMultipleFrom() {
@@ -30,7 +30,46 @@ class GmailFilterTest extends \PHPUnit_Framework_TestCase
             $this->filter->from(['foo@example.com', 'bar@example.com'])
         ]);
 
-        $this->assertContains('<apps:property name=\'from\' value=\'foo@example.com OR bar@example.com\'/>', $output);
+        $this->assertContains('name=\'from\' value=\'foo@example.com OR bar@example.com\'', $output);
+    }
+
+    public function testSingleTo() {
+        // TODO: Does this need to be done each time?
+        $output = $this->createBuilder([
+            $this->filter->to(['foo@example.com'])
+        ]);
+
+        $this->assertContains('name=\'to\' value=\'foo@example.com\'', $output);
+    }
+
+    public function testMultipleTo() {
+        $output = $this->createBuilder([
+            $this->filter->to(['foo@example.com', 'bar@example.com'])
+        ]);
+
+        $this->assertContains('name=\'to\' value=\'foo@example.com OR bar@example.com\'', $output);
+    }
+
+    public function testArchive()
+    {
+        $output = $this->createBuilder([
+            $this->filter->archive()
+        ]);
+
+        $this->assertContains('name=\'shouldArchive\' value=\'true\'', $output);
+        $this->assertNotContains('name=\'shouldArchive\' value=\'false\'', $output);
+    }
+
+    public function testLabelAndArchive()
+    {
+        $output = $this->createBuilder([
+            $this->filter->labelAndArchive('foo')
+        ]);
+
+        $this->assertContains('name=\'label\' value=\'foo\'', $output);
+
+        $this->assertContains('name=\'shouldArchive\' value=\'true\'', $output);
+        $this->assertNotContains('name=\'shouldArchive\' value=\'false\'', $output);
     }
 
     /**
