@@ -1,8 +1,10 @@
 <?php
 
+namespace Opdavies\GmailFilterBuilder;
+
 use Opdavies\Twig\Extensions\TwigBooleanStringExtension;
 
-class GmailFilterBuilder
+class Builder
 {
     /**
      * @var string

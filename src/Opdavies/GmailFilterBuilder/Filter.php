@@ -1,6 +1,8 @@
 <?php
 
-class GmailFilter
+namespace Opdavies\GmailFilterBuilder;
+
+class Filter
 {
     /**
      * @param array
