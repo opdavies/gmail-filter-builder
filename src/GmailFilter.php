@@ -92,6 +92,18 @@ class GmailFilter
     }
 
     /**
+     * Condition based on words within the email.
+     *
+     * @param string $value
+     *   The value to compare against.
+     *
+     * @return $this
+     */
+    public function has($value) {
+        return $this->contains($value);
+    }
+
+    /**
      * Condition based on the subject.
      *
      * @param string $value
