@@ -4,49 +4,71 @@ namespace Opdavies\GmailFilterBuilder;
 
 class Filter
 {
+    private $properties = [];
+
     public function has($value)
     {
-        return ['hasTheWord' => $value];
+        $this->properties['hasTheWord'] = $value;
+
+        return $this;
     }
 
     public function from()
     {
-        return ['from' =>  func_get_args()];
+        $this->properties['from'] = collect(func_get_args())
+            ->map(function ($address) {
+                return trim($address);
+            })->implode(',');
+
+        return $this;
     }
 
     public function label($label)
     {
-        return ['label' => $label];
+        $this->properties['label'] = $label;
+
+        return $this;
     }
 
     public function archive()
     {
-        return ['shouldArchive' => 'true'];
+        $this->properties['shouldArchive'] = 'true';
+
+        return $this;
     }
 
     public function labelAndArchive($label)
     {
-        return $this->label($label) + $this->archive();
+        $this->label($label)->archive();
+
+        return $this;
     }
 
     public function spam()
     {
-        return [
-            'shouldSpam' => 'true',
-            'shouldNeverSpam' => 'false',
-        ];
+        $this->properties['shouldSpam'] = 'true';
+        $this->properties['shouldNeverSpam'] = 'false';
+
+        return $this;
     }
 
     public function neverSpam()
     {
-        return [
-            'shouldSpam' => 'false',
-            'shouldNeverSpam' => 'true',
-        ];
+        $this->properties['shouldSpam'] = 'false';
+        $this->properties['shouldNeverSpam'] = 'true';
+
+        return $this;
     }
 
     public function trash()
     {
-        return ['shouldTrash' => 'true'];
+        $this->properties['shouldTrash'] = 'true';
+
+        return $this;
+    }
+
+    public function getProperties()
+    {
+        return $this->properties;
     }
 }

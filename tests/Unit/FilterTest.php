@@ -28,7 +28,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             ['hasTheWord' => 'something'],
-            $this->filter->has('something')
+            $this->filter->has('something')->getProperties()
         );
     }
 
@@ -39,14 +39,16 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         // Ensure that we can set one from address.
         $this->assertEquals(
-            ['from' => ['foo@example.com']],
-            $this->filter->from('foo@example.com')
+            ['from' => 'foo@example.com'],
+            $this->filter->from('foo@example.com')->getProperties()
         );
 
         // Ensure that we can set multiple from addresses.
         $this->assertEquals(
-            ['from' => ['foo@example.com', 'bar@example.com']],
-            $this->filter->from('foo@example.com', 'bar@example.com')
+            ['from' => 'foo@example.com,bar@example.com'],
+            $this->filter
+                ->from('foo@example.com', 'bar@example.com')
+                ->getProperties()
         );
     }
 
@@ -55,7 +57,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testLabel()
     {
-        $this->assertEquals(['label' => 'Foo'], $this->filter->label('Foo'));
+        $this->assertEquals(
+            ['label' => 'Foo'],
+            $this->filter->label('Foo')->getProperties()
+        );
     }
 
     /**
@@ -65,7 +70,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             ['shouldArchive' => 'true'],
-            $this->filter->archive()
+            $this->filter->archive()->getProperties()
         );
     }
 
@@ -76,7 +81,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             ['shouldArchive' => 'true', 'label' => 'Foo'],
-            $this->filter->labelAndArchive('Foo')
+            $this->filter->labelAndArchive('Foo')->getProperties()
         );
     }
 
@@ -90,7 +95,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
                 'shouldSpam' => 'true',
                 'shouldNeverSpam' => 'false'
             ],
-            $this->filter->spam()
+            $this->filter->spam()->getProperties()
         );
     }
 
@@ -104,7 +109,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
                 'shouldSpam' => 'false',
                 'shouldNeverSpam' => 'true'
             ],
-            $this->filter->neverSpam()
+            $this->filter->neverSpam()->getProperties()
         );
     }
 
@@ -115,7 +120,26 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             ['shouldTrash' => 'true'],
-            $this->filter->trash()
+            $this->filter->trash()->getProperties()
+        );
+    }
+
+    public function testMethodsCanBeChained()
+    {
+        $this->assertEquals(
+            [
+                'from' => 'foo@example.com,bar@example.com',
+                'hasTheWord' => 'Something',
+                'label' => 'Foo',
+                'shouldArchive' => 'true',
+                'shouldNeverSpam' => 'true',
+                'shouldSpam' => 'false',
+            ],
+            $this->filter->from('foo@example.com ', 'bar@example.com')
+                ->has('Something')
+                ->labelAndArchive('Foo')
+                ->neverSpam()
+                ->getProperties()
         );
     }
 }
