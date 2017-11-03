@@ -67,6 +67,48 @@ class Filter
         return $this;
     }
 
+    public function read()
+    {
+        $this->properties['markAsRead'] = 'true';
+
+        return $this;
+    }
+
+    public function star()
+    {
+        $this->properties['shouldStar'] = 'true';
+
+        return $this;
+    }
+
+    public function forward($to)
+    {
+        $this->properties['forwardTo'] = $to;
+
+        return $this;
+    }
+
+    public function important()
+    {
+        $this->properties['shouldAlwaysMarkAsImportant'] = 'true';
+
+        return $this;
+    }
+
+    public function notImportant()
+    {
+        $this->properties['shouldNeverMarkAsImportant'] = 'true';
+
+        return $this;
+    }
+
+    public function categorise($category)
+    {
+        $this->properties['smartLabelToApply'] = $category;
+
+        return $this;
+    }
+
     public function getProperties()
     {
         return $this->properties;

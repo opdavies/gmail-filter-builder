@@ -124,6 +124,54 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testMarkAsRead()
+    {
+        $this->assertEquals(
+            ['markAsRead' => 'true'],
+            $this->filter->read()->getProperties()
+        );
+    }
+
+    public function testStar()
+    {
+        $this->assertEquals(
+            ['shouldStar' => 'true'],
+            $this->filter->star()->getProperties()
+        );
+    }
+
+    public function testForwardTo()
+    {
+        $this->assertEquals(
+            ['forwardTo' => 'foo@example.com'],
+            $this->filter->forward('foo@example.com')->getProperties()
+        );
+    }
+
+    public function testMarkImportant()
+    {
+        $this->assertEquals(
+            ['shouldAlwaysMarkAsImportant' => 'true'],
+            $this->filter->important()->getProperties()
+        );
+    }
+
+    public function testMarkNotImportant()
+    {
+        $this->assertEquals(
+            ['shouldNeverMarkAsImportant' => 'true'],
+            $this->filter->notImportant()->getProperties()
+        );
+    }
+    public function testCategorise()
+    {
+        $this->assertEquals(
+            ['smartLabelToApply' => 'Foo'],
+            $this->filter->categorise('Foo')->getProperties()
+        );
+    }
+
+
     public function testMethodsCanBeChained()
     {
         $this->assertEquals(
@@ -131,14 +179,18 @@ class FilterTest extends \PHPUnit_Framework_TestCase
                 'from' => 'foo@example.com,bar@example.com',
                 'hasTheWord' => 'Something',
                 'label' => 'Foo',
+                'markAsRead' => 'true',
                 'shouldArchive' => 'true',
                 'shouldNeverSpam' => 'true',
                 'shouldSpam' => 'false',
+                'shouldStar' => 'true',
             ],
             $this->filter->from('foo@example.com ', 'bar@example.com')
                 ->has('Something')
                 ->labelAndArchive('Foo')
+                ->read()
                 ->neverSpam()
+                ->star()
                 ->getProperties()
         );
     }
