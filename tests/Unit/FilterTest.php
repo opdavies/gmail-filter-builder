@@ -33,25 +33,81 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Filter::hasNot()
+     */
+    public function testHasNot() {
+        $this->assertEquals(
+            ['doesNotHaveTheWord' => 'something'],
+            $this->filter->hasNot('something')->getProperties()
+        );
+    }
+
+    /**
      * @covers Filter::from()
      */
     public function testFrom()
     {
         // Ensure that we can set one from address.
         $this->assertEquals(
-            ['from' => 'foo@example.com'],
+            ['from' => ['foo@example.com']],
             $this->filter->from('foo@example.com')->getProperties()
         );
 
         // Ensure that we can set multiple from addresses.
         $this->assertEquals(
-            ['from' => 'foo@example.com,bar@example.com'],
+            ['from' => ['foo@example.com', 'bar@example.com']],
             $this->filter
                 ->from('foo@example.com', 'bar@example.com')
                 ->getProperties()
         );
     }
 
+    /**
+     * @covers Filter::to()
+     */
+    public function testTo()
+    {
+        $this->assertEquals(
+            ['to' => ['foo@example.com']],
+            $this->filter->to('foo@example.com')->getProperties()
+        );
+
+        $this->assertEquals(
+            ['to' => ['bar@example.com', 'baz@example.com']],
+            $this->filter->to('bar@example.com', 'baz@example.com')
+                ->getProperties()
+        );
+    }
+
+    /**
+     * @covers Filter::subject()
+     */
+    public function testSubject()
+    {
+        $this->assertEquals(
+            ['subject' => 'Something'],
+            $this->filter->subject('Something')->getProperties()
+        );
+    }
+
+    /**
+     * @covers Filter::hasAttachment()
+     */
+    public function testHasAttachment()
+    {
+        $this->assertEquals(
+            ['hasAttachment' => 'true'],
+            $this->filter->hasAttachment()->getProperties()
+        );
+    }
+
+    public function testExcludeChats()
+    {
+        $this->assertEquals(
+            ['excludeChats' => 'true'],
+            $this->filter->excludeChats()->getProperties()
+        );
+    }
     /**
      * @covers Filter::label()
      */
@@ -171,24 +227,27 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     public function testMethodsCanBeChained()
     {
         $this->assertEquals(
             [
-                'from' => 'foo@example.com,bar@example.com',
+                'from' => ['foo@example.com', 'bar@example.com'],
                 'hasTheWord' => 'Something',
+                'excludeChats' => 'true',
                 'label' => 'Foo',
                 'markAsRead' => 'true',
                 'shouldArchive' => 'true',
                 'shouldNeverSpam' => 'true',
                 'shouldSpam' => 'false',
                 'shouldStar' => 'true',
+                'shouldAlwaysMarkAsImportant' => 'true',
             ],
             $this->filter->from('foo@example.com ', 'bar@example.com')
                 ->has('Something')
+                ->excludeChats()
                 ->labelAndArchive('Foo')
                 ->read()
+                ->important()
                 ->neverSpam()
                 ->star()
                 ->getProperties()

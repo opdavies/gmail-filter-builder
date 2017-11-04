@@ -13,12 +13,50 @@ class Filter
         return $this;
     }
 
+    public function hasNot($value)
+    {
+        $this->properties['doesNotHaveTheWord'] = $value;
+
+        return $this;
+    }
+
     public function from()
     {
         $this->properties['from'] = collect(func_get_args())
             ->map(function ($address) {
                 return trim($address);
-            })->implode(',');
+            })->all();
+
+        return $this;
+    }
+
+    public function to()
+    {
+        $this->properties['to'] = collect(func_get_args())
+            ->map(function ($address) {
+                return trim($address);
+            })->all();
+
+        return $this;
+    }
+
+    public function subject($subject)
+    {
+        $this->properties['subject'] = $subject;
+
+        return $this;
+    }
+
+    public function hasAttachment()
+    {
+        $this->properties['hasAttachment'] = 'true';
+
+        return $this;
+    }
+
+    public function excludeChats()
+    {
+        $this->properties['excludeChats'] = 'true';
 
         return $this;
     }
