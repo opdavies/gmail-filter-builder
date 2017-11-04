@@ -56,8 +56,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         // Ensure that we can set multiple from addresses.
         $this->assertEquals(
             ['from' => ['foo@example.com', 'bar@example.com']],
-            $this->filter
-                ->from('foo@example.com', 'bar@example.com')
+            $this->filter->from('foo@example.com', 'bar@example.com')
                 ->getProperties()
         );
     }
