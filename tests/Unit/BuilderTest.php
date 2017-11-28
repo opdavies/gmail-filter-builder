@@ -2,8 +2,9 @@
 
 use Opdavies\GmailFilterBuilder\Builder;
 use Opdavies\GmailFilterBuilder\Filter;
+use PHPUnit\Framework\TestCase;
 
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     public function testBuild()
     {

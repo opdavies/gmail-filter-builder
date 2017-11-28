@@ -3,8 +3,9 @@
 namespace Opdavies\Tests\GmailFilterBuilder;
 
 use Opdavies\GmailFilterBuilder\Filter;
+use PHPUnit\Framework\TestCase;
 
-class FilterTest extends \PHPUnit_Framework_TestCase
+class FilterTest extends TestCase
 {
     /**
      * @var Filter
