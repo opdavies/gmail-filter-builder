@@ -17,8 +17,6 @@ class FilterTest extends TestCase
      */
     public function setUp()
     {
-        parent::setUp();
-
         $this->filter = new Filter();
     }
 
