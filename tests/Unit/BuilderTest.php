@@ -18,12 +18,7 @@ class BuilderTest extends TestCase
             ->star()
             ->important();
 
-        $builder = new Builder([
-            $filterA->getProperties(),
-            $filterB->getProperties(),
-        ]);
-
-        $result = $builder->build();
+        $result = new Builder([$filterA, $filterB]);
 
         $expected = "<?xml version='1.0' encoding='UTF-8'?>";
         $expected .= "<feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";

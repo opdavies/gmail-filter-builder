@@ -14,12 +14,17 @@ class Builder
         $this->filters = $filters;
     }
 
+    public function __toString()
+    {
+        return $this->build();
+    }
+
     /**
      * Build XML for a set of filters.
      *
      * @return string
      */
-    public function build()
+    private function build()
     {
         $prefix = "<?xml version='1.0' encoding='UTF-8'?><feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";
         $suffix = '</feed>';
@@ -32,15 +37,15 @@ class Builder
     }
 
     /**
-     * Build XML for an entry.
+     * Build XML for an filter.
      *
-     * @param array $items
+     * @param Filter $filter
      *
      * @return string
      */
-    private function buildEntry(array $items)
+    private function buildEntry(Filter $filter)
     {
-        $entry = collect($items)->map(function ($value, $key) {
+        $entry = collect($filter->getProperties())->map(function ($value, $key) {
             return $this->buildProperty($value, $key);
         })->implode('');
 
