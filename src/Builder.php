@@ -62,7 +62,7 @@ class Builder
      */
     private function buildProperty($value, $key)
     {
-        if ($key == 'from') {
+        if (collect(['from', 'to'])->contains($key)) {
             $value = collect($value)->implode('|');
         }
 
