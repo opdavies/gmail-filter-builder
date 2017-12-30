@@ -4,12 +4,21 @@ namespace Opdavies\GmailFilterBuilder;
 
 class Builder
 {
+    /**
+     * @var array
+     */
     private $filters = [];
 
-    public function __construct(array $filters) {
+    public function __construct(array $filters)
+    {
         $this->filters = $filters;
     }
 
+    /**
+     * Build XML for a set of filters.
+     *
+     * @return string
+     */
     public function build()
     {
         $prefix = "<?xml version='1.0' encoding='UTF-8'?><feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";
@@ -23,6 +32,8 @@ class Builder
     }
 
     /**
+     * Build XML for an entry.
+     *
      * @param array $items
      *
      * @return string

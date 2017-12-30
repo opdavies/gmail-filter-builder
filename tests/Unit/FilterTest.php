@@ -55,8 +55,7 @@ class FilterTest extends TestCase
         // Ensure that we can set multiple from addresses.
         $this->assertEquals(
             ['from' => ['foo@example.com', 'bar@example.com']],
-            $this->filter->from(['foo@example.com', 'bar@example.com'])
-                ->getProperties()
+            $this->filter->from(['foo@example.com', 'bar@example.com'])->getProperties()
         );
     }
 
@@ -72,8 +71,7 @@ class FilterTest extends TestCase
 
         $this->assertEquals(
             ['to' => ['bar@example.com', 'baz@example.com']],
-            $this->filter->to(['bar@example.com', 'baz@example.com'])
-                ->getProperties()
+            $this->filter->to(['bar@example.com', 'baz@example.com'])->getProperties()
         );
     }
 
