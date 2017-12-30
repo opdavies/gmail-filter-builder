@@ -9,7 +9,7 @@ class BuilderTest extends TestCase
     public function testBuild()
     {
         $filterA = (new Filter())
-            ->from('foo@example.com', 'test@example.com')
+            ->from(['foo@example.com', 'test@example.com'])
             ->label('Some label')
             ->archive();
 

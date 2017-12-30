@@ -20,21 +20,21 @@ class Filter
         return $this;
     }
 
-    public function from()
+    public function from($values)
     {
-        $this->properties['from'] = collect(func_get_args())
-            ->map(function ($address) {
-                return trim($address);
+        $this->properties['from'] = collect($values)
+            ->map(function ($value) {
+                return trim($value);
             })->all();
 
         return $this;
     }
 
-    public function to()
+    public function to($values)
     {
-        $this->properties['to'] = collect(func_get_args())
-            ->map(function ($address) {
-                return trim($address);
+        $this->properties['to'] = collect($values)
+            ->map(function ($value) {
+                return trim($value);
             })->all();
 
         return $this;
