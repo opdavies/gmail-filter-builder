@@ -8,33 +8,37 @@ class BuilderTest extends TestCase
 {
     public function testBuild()
     {
-        $filterA = $this->getMockBuilder(Filter::class)
-            ->setMethods(['getProperties'])
-            ->getMock();
+        $filterA = (new Filter())
+            ->from('foo@example.com', 'test@example.com')
+            ->label('Some label')
+            ->archive();
 
-        $filterB = $this->getMockBuilder(Filter::class)
-            ->setMethods(['getProperties'])
-            ->getMock();
-
-        $filterA->method('getProperties')
-            ->willReturn(
-                [
-                    ['from' => 'foo@example.com'],
-                    ['shouldStar' => true],
-                ]
-            );
-
-        $filterB->method('getProperties')
-            ->willReturn(
-                [
-                    ['to' => 'bar@example.com'],
-                ]
-            );
+        $filterB = (new Filter())
+            ->has('from:bar@example.com')
+            ->star()
+            ->important();
 
         $builder = new Builder([
             $filterA->getProperties(),
             $filterB->getProperties(),
         ]);
-        $builder->build();
+
+        $result = $builder->build();
+
+        $expected = "<?xml version='1.0' encoding='UTF-8'?>";
+        $expected .= "<feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";
+        $expected .= '<entry>';
+        $expected .= "<apps:property name='from' value='foo@example.com|test@example.com'/>";
+        $expected .= "<apps:property name='label' value='Some label'/>";
+        $expected .= "<apps:property name='shouldArchive' value='true'/>";
+        $expected .= '</entry>';
+        $expected .= '<entry>';
+        $expected .= "<apps:property name='hasTheWord' value='from:bar@example.com'/>";
+        $expected .= "<apps:property name='shouldStar' value='true'/>";
+        $expected .= "<apps:property name='shouldAlwaysMarkAsImportant' value='true'/>";
+        $expected .= '</entry>';
+        $expected .= '</feed>';
+
+        $this->assertEquals($expected, $result);
     }
 }
