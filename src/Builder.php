@@ -66,6 +66,9 @@ class Builder
             $value = collect($value)->implode('|');
         }
 
-        return "<apps:property name='{$key}' value='{$value}'/>";
+        return vsprintf("<apps:property name='%s' value='%s'/>", [
+            $key,
+            htmlentities($value),
+        ]);
     }
 }
