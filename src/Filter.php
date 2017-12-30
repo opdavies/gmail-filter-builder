@@ -10,6 +10,14 @@ class Filter
     private $properties = [];
 
     /**
+     * @return static
+     */
+    public static function create()
+    {
+        return new static();
+    }
+
+    /**
      * @param string $value
      *
      * @return $this
