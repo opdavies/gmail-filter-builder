@@ -31,9 +31,9 @@ class Builder
 
         $xml = collect($this->filters)->map(function ($items) {
             return $this->buildEntry($items);
-        })->implode('');
+        })->implode(PHP_EOL);
 
-        return $prefix . $xml . $suffix;
+        return collect([$prefix, $xml, $suffix])->implode(PHP_EOL);
     }
 
     /**
