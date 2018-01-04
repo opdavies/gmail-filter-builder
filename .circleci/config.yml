@@ -19,4 +19,8 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum 'composer.json' }}
-      - run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
