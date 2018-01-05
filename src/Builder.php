@@ -68,7 +68,7 @@ class Builder
 
         return vsprintf("<apps:property name='%s' value='%s'/>", [
             $key,
-            htmlentities($value),
+            htmlentities($this->implode($value)),
         ]);
     }
 
@@ -77,6 +77,14 @@ class Builder
      */
     private function implode($value, $separator = '|')
     {
+        if (is_string($value)) {
+            return $value;
+        }
+
+        if (is_array($value) && count($value) === 1) {
+            return reset($value);
+        }
+
         return sprintf('(%s)', collect($value)->implode($separator));
     }
 }
