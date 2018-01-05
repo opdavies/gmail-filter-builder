@@ -63,12 +63,20 @@ class Builder
     private function buildProperty($value, $key)
     {
         if (collect(['from', 'to'])->contains($key)) {
-            $value = collect($value)->implode('|');
+            $value = $this->implode($value);
         }
 
         return vsprintf("<apps:property name='%s' value='%s'/>", [
             $key,
             htmlentities($value),
         ]);
+    }
+
+    /**
+     * Implode values with the appropriate prefix, suffix and separator.
+     */
+    private function implode($value, $separator = '|')
+    {
+        return sprintf('(%s)', collect($value)->implode($separator));
     }
 }
