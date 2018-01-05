@@ -26,7 +26,7 @@ class Builder
      */
     private function build()
     {
-        $prefix = "<?xml version='1.0' encoding='UTF-8'?><feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";
+        $prefix = "<?xml version='1.0' encoding='UTF-8'?>" . PHP_EOL . "<feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";
         $suffix = '</feed>';
 
         $xml = collect($this->filters)->map(function ($items) {
@@ -47,9 +47,9 @@ class Builder
     {
         $entry = collect($filter->getProperties())->map(function ($value, $key) {
             return $this->buildProperty($value, $key);
-        })->implode('');
+        })->implode(PHP_EOL);
 
-        return "<entry>{$entry}</entry>";
+        return collect(['<entry>', $entry, '</entry>'])->implode(PHP_EOL);
     }
 
     /**
