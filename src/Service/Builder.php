@@ -1,6 +1,8 @@
 <?php
 
-namespace Opdavies\GmailFilterBuilder;
+namespace Opdavies\GmailFilterBuilder\Service;
+
+use Opdavies\GmailFilterBuilder\Filter;
 
 class Builder
 {

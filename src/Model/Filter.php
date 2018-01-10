@@ -1,6 +1,6 @@
 <?php
 
-namespace Opdavies\GmailFilterBuilder;
+namespace Opdavies\GmailFilterBuilder\Model;
 
 class Filter
 {
