@@ -1,5 +1,6 @@
 <?php
 
+use Opdavies\GmailFilterBuilder\Console\Command\GenerateCommand;
 use Opdavies\GmailFilterBuilder\Container\Container;
 use Symfony\Component\Console\Application;
 
@@ -9,4 +10,5 @@ $container = new Container();
 
 /** @var Application $application */
 $application = $container->get('app.cli');
+$application->setDefaultCommand(GenerateCommand::NAME);
 $application->run();

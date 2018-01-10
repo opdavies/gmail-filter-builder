@@ -10,13 +10,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends Command
 {
+    const NAME = 'generate';
+
     /**
      * {@inheritdoc}
      */
     public function configure()
     {
         $this
-            ->setName('generate')
+            ->setName(self::NAME)
             ->setDefinition([
                 new InputArgument('input-file', InputArgument::OPTIONAL, 'The name of the PHP file containing your filters.', 'filters.php'),
                 new InputArgument('output-file', InputArgument::OPTIONAL, 'The name of the XML file to generate.', 'filters.xml')
