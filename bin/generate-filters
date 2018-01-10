@@ -1,14 +1,4 @@
 #!/usr/bin/env php
 <?php
 
-use Opdavies\GmailFilterBuilder\Builder;
-
-if (file_exists(__DIR__.'/../../../../filters.php')) {
-    $filters = require(__DIR__.'/../../../../filters.php');
-} elseif (file_exists(__DIR__.'/../filters.php')) {
-    $filters = require(__DIR__.'/../filters.php');
-} else {
-    throw new \Exception('No filters.php file found.');
-}
-
-echo new Builder($filters);
+require_once __DIR__.'/generate-filters.php';
