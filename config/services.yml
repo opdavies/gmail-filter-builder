@@ -3,6 +3,9 @@ services:
     class: Symfony\Component\Console\Application
     autowire: true
 
+  app.builder:
+    class: Opdavies\GmailFilterBuilder\Service\Builder
+
   app.generate.command:
     class: Opdavies\GmailFilterBuilder\Console\Command\GenerateCommand
     autowire: true

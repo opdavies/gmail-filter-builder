@@ -3,17 +3,28 @@
 namespace Opdavies\GmailFilterBuilder\Service;
 
 use Opdavies\GmailFilterBuilder\Filter;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Builder
 {
+    private $filesystem;
+
     /**
      * @var array
      */
     private $filters = [];
 
-    public function __construct(array $filters)
-    {
+    /**
+     * @var
+     */
+    private $outputFile;
+
+    public function __construct(array $filters, $outputFile = 'filters.xml') {
+        $this->filesystem = new Filesystem();
         $this->filters = $filters;
+        $this->outputFile = $outputFile;
+
+        $this->build();
     }
 
     public function __toString()
@@ -35,7 +46,9 @@ class Builder
             return $this->buildEntry($items);
         })->implode(PHP_EOL);
 
-        return collect([$prefix, $xml, $suffix])->implode(PHP_EOL);
+        $content = collect([$prefix, $xml, $suffix])->implode(PHP_EOL);
+
+        $this->filesystem->dumpFile($this->outputFile, $content);
     }
 
     /**
