@@ -19,10 +19,21 @@ class Builder
      */
     private $outputFile;
 
-    public function __construct(array $filters, $outputFile = 'filters.xml') {
+    /**
+     * @var bool
+     */
+    private $writeFile;
+
+    /**
+     * @var string
+     */
+    private $xml;
+
+    public function __construct(array $filters, $outputFile = 'filters.xml', $writeFile = true) {
         $this->filesystem = new Filesystem();
         $this->filters = $filters;
         $this->outputFile = $outputFile;
+        $this->writeFile = $writeFile;
 
         $this->build();
     }
@@ -30,6 +41,16 @@ class Builder
     public function __toString()
     {
         return $this->build();
+    }
+
+    /**
+     * Returns the generated XML.
+     *
+     * @return string
+     */
+    public function getXml()
+    {
+        return $this->xml;
     }
 
     /**
@@ -46,9 +67,11 @@ class Builder
             return $this->buildEntry($items);
         })->implode(PHP_EOL);
 
-        $content = collect([$prefix, $xml, $suffix])->implode(PHP_EOL);
+        $this->xml = collect([$prefix, $xml, $suffix])->implode(PHP_EOL);
 
-        $this->filesystem->dumpFile($this->outputFile, $content);
+        if ($this->writeFile) {
+            $this->filesystem->dumpFile($this->outputFile, $this->xml);
+        }
     }
 
     /**

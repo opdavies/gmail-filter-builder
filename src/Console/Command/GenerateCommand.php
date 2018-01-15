@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 class GenerateCommand extends Command
 {
@@ -44,10 +45,14 @@ class GenerateCommand extends Command
             throw new \Exception('No filters.php file found.');
         }
 
-        // TOOD: Check return code.
-        new Builder($filters, $outputFile);
-
         $io = new SymfonyStyle($input, $output);
-        $io->success(sprintf('%s file generated.', $outputFile));
+
+        try {
+            new Builder($filters, $outputFile);
+
+            $io->success(sprintf('%s file generated.', $outputFile));
+        } catch (IOException $e) {
+            $io->error($e->getMessage());
+        }
     }
 }
