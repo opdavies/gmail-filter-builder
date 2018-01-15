@@ -23,7 +23,7 @@ For example:
 ```php
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 $filters = [];
 
@@ -34,7 +34,12 @@ return $filters;
 
 ### Step 3: Generate the XML
 
-Run `./vendor/bin/generate-filters > filters.xml` to generate the XML for the filters and export it into a file.
+Run `./vendor/bin/generate-filters` to generate the XML for the filters and export it into a file.
+
+#### Options
+
+- `--input-file` - specify the name of the file containing the filters (defaults to `filters.php`).
+- `--output-file` - specify the name of the output file (defaults to `filters.xml`).
 
 ### Step 4: Import the Filters
 
