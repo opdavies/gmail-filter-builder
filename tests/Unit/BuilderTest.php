@@ -18,7 +18,7 @@ class BuilderTest extends TestCase
             ->star()
             ->important();
 
-        $result = new Builder([$filterA, $filterB]);
+        $result = new Builder([$filterA, $filterB], '', false);
 
         $expected = <<<EOF
 <?xml version='1.0' encoding='UTF-8'?>
@@ -36,6 +36,6 @@ class BuilderTest extends TestCase
 </feed>
 EOF;
 
-        $this->assertEquals($expected, $result->__toString());
+        $this->assertEquals($expected, $result->getXml());
     }
 }

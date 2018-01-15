@@ -10,14 +10,25 @@
         }
     ],
     "require": {
+        "symfony/config": "^3.4",
+        "symfony/console": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/filesystem": "^3.4",
+        "symfony/yaml": "^3.4",
         "tightenco/collect": "^5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^5.7",
+        "symfony/var-dumper": "^3.4"
     },
     "autoload": {
         "psr-4": {
             "Opdavies\\GmailFilterBuilder\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Opdavies\\GmailFilterBuilder\\": "tests/"
         }
     },
     "extra": {
@@ -25,5 +36,8 @@
             "dev-master": "1.1-dev"
         }
     },
-    "bin": ["bin/generate-filters"]
+    "bin": ["bin/generate-filters"],
+    "config": {
+        "sort-packages": true
+    }
 }
