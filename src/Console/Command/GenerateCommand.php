@@ -37,10 +37,12 @@ class GenerateCommand extends Command
         $inputFile = $input->getOption('input-file');
         $outputFile = $input->getOption('output-file');
 
-        if (file_exists(__DIR__.'/../../../../'.$inputFile)) {
-            $filters = require(__DIR__.'/../../../../'.$inputFile);
-        } elseif (file_exists(__DIR__.'/../../../'.$inputFile)) {
-            $filters = require(__DIR__.'/../../../'.$inputFile);
+        if (file_exists(__DIR__.'/'.$inputFile)) {
+            $filters = require_once __DIR__.'/'.$inputFile;
+        }
+        elseif (file_exists(__DIR__.'/../../../../../../'.$inputFile)) {
+            # Installed as a dependency within "vendor".
+            $filters = require_once __DIR__.'/../../../../../../'.$inputFile;
         } else {
             throw new \Exception('No filters.php file found.');
         }
