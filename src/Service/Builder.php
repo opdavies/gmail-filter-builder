@@ -29,7 +29,8 @@ class Builder
      */
     private $xml;
 
-    public function __construct(array $filters, $outputFile = 'filters.xml', $writeFile = true) {
+    public function __construct(array $filters, $outputFile = 'filters.xml', $writeFile = true)
+    {
         $this->filesystem = new Filesystem();
         $this->filters = $filters;
         $this->outputFile = $outputFile;

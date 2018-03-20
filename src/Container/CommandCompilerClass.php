@@ -11,7 +11,8 @@ class CommandCompilerClass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container) {
+    public function process(ContainerBuilder $container)
+    {
         $definition = $container->findDefinition('app.cli');
         $taggedServices = $container->findTaggedServiceIds('ConsoleCommand');
 

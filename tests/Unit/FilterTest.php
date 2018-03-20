@@ -34,7 +34,8 @@ class FilterTest extends TestCase
     /**
      * @covers Filter::hasNot()
      */
-    public function testHasNot() {
+    public function testHasNot()
+    {
         $this->assertEquals(
             ['doesNotHaveTheWord' => 'something'],
             $this->filter->hasNot('something')->getProperties()
