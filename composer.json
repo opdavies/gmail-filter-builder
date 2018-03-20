@@ -39,5 +39,8 @@
     "bin": ["bin/generate-filters", "bin/generate-filters.php"],
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
