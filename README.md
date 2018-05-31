@@ -1,6 +1,6 @@
 # Gmail Filter Builder
 
-[![CircleCI](https://circleci.com/gh/opdavies/gmail-filter-builder.svg?style=svg)](https://circleci.com/gh/opdavies/gmail-filter-builder)
+[![Build Status](https://travis-ci.org/opdavies/gmail-filter-builder.svg?branch=master)](https://travis-ci.org/opdavies/gmail-filter-builder)
 
 This library allows you to define Gmail filters in PHP, and then generate XML that you can import into Gmail's filter settings
 
