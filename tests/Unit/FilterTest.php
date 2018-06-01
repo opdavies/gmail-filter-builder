@@ -2,7 +2,7 @@
 
 namespace Opdavies\Tests\GmailFilterBuilder;
 
-use Opdavies\GmailFilterBuilder\Filter;
+use Opdavies\GmailFilterBuilder\Model\Filter;
 use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase

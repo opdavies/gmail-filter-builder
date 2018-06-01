@@ -1,7 +1,7 @@
 <?php
 
-use Opdavies\GmailFilterBuilder\Builder;
-use Opdavies\GmailFilterBuilder\Filter;
+use Opdavies\GmailFilterBuilder\Model\Filter;
+use Opdavies\GmailFilterBuilder\Service\Builder;
 use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
