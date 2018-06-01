@@ -236,9 +236,22 @@ class Filter
     }
 
     /**
+     * Return the filter properties as an array.
+     *
      * @return array
+     * @deprecated toArray()
      */
     public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * Return the filter properties as an array.
+     *
+     * @return array
+     */
+    public function toArray()
     {
         return $this->properties;
     }

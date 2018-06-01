@@ -27,7 +27,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['hasTheWord' => 'something'],
-            $this->filter->has('something')->getProperties()
+            $this->filter->has('something')->toArray()
         );
     }
 
@@ -38,7 +38,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['doesNotHaveTheWord' => 'something'],
-            $this->filter->hasNot('something')->getProperties()
+            $this->filter->hasNot('something')->toArray()
         );
     }
 
@@ -50,13 +50,13 @@ class FilterTest extends TestCase
         // Ensure that we can set one from address.
         $this->assertEquals(
             ['from' => ['foo@example.com']],
-            $this->filter->from('foo@example.com')->getProperties()
+            $this->filter->from('foo@example.com')->toArray()
         );
 
         // Ensure that we can set multiple from addresses.
         $this->assertEquals(
             ['from' => ['foo@example.com', 'bar@example.com']],
-            $this->filter->from(['foo@example.com', 'bar@example.com'])->getProperties()
+            $this->filter->from(['foo@example.com', 'bar@example.com'])->toArray()
         );
 
     }
@@ -68,8 +68,8 @@ class FilterTest extends TestCase
      */
     public function testNoFromPropertyExistsIfTheValueIsEmpty()
     {
-        $this->assertArrayNotHasKey('from', $this->filter->from('')->getProperties());
-        $this->assertArrayNotHasKey('from', $this->filter->from([])->getProperties());
+        $this->assertArrayNotHasKey('from', $this->filter->from('')->toArray());
+        $this->assertArrayNotHasKey('from', $this->filter->from([])->toArray());
     }
 
     /**
@@ -79,12 +79,12 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['to' => ['foo@example.com']],
-            $this->filter->to('foo@example.com')->getProperties()
+            $this->filter->to('foo@example.com')->toArray()
         );
 
         $this->assertEquals(
             ['to' => ['bar@example.com', 'baz@example.com']],
-            $this->filter->to(['bar@example.com', 'baz@example.com'])->getProperties()
+            $this->filter->to(['bar@example.com', 'baz@example.com'])->toArray()
         );
     }
 
@@ -93,8 +93,8 @@ class FilterTest extends TestCase
      */
     public function testNoToPropertyExistsIfTheValueIsEmpty()
     {
-        $this->assertArrayNotHasKey('to', $this->filter->to('')->getProperties());
-        $this->assertArrayNotHasKey('to', $this->filter->to([])->getProperties());
+        $this->assertArrayNotHasKey('to', $this->filter->to('')->toArray());
+        $this->assertArrayNotHasKey('to', $this->filter->to([])->toArray());
     }
 
     /**
@@ -104,7 +104,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['subject' => 'Something'],
-            $this->filter->subject('Something')->getProperties()
+            $this->filter->subject('Something')->toArray()
         );
     }
 
@@ -115,7 +115,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['hasAttachment' => 'true'],
-            $this->filter->hasAttachment()->getProperties()
+            $this->filter->hasAttachment()->toArray()
         );
     }
 
@@ -123,7 +123,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['excludeChats' => 'true'],
-            $this->filter->excludeChats()->getProperties()
+            $this->filter->excludeChats()->toArray()
         );
     }
     /**
@@ -133,7 +133,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['label' => 'Foo'],
-            $this->filter->label('Foo')->getProperties()
+            $this->filter->label('Foo')->toArray()
         );
     }
 
@@ -144,7 +144,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldArchive' => 'true'],
-            $this->filter->archive()->getProperties()
+            $this->filter->archive()->toArray()
         );
     }
 
@@ -155,7 +155,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldArchive' => 'true', 'label' => 'Foo'],
-            $this->filter->labelAndArchive('Foo')->getProperties()
+            $this->filter->labelAndArchive('Foo')->toArray()
         );
     }
 
@@ -169,7 +169,7 @@ class FilterTest extends TestCase
                 'shouldSpam' => 'true',
                 'shouldNeverSpam' => 'false'
             ],
-            $this->filter->spam()->getProperties()
+            $this->filter->spam()->toArray()
         );
     }
 
@@ -183,7 +183,7 @@ class FilterTest extends TestCase
                 'shouldSpam' => 'false',
                 'shouldNeverSpam' => 'true'
             ],
-            $this->filter->neverSpam()->getProperties()
+            $this->filter->neverSpam()->toArray()
         );
     }
 
@@ -194,7 +194,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldTrash' => 'true'],
-            $this->filter->trash()->getProperties()
+            $this->filter->trash()->toArray()
         );
     }
 
@@ -202,7 +202,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['markAsRead' => 'true'],
-            $this->filter->read()->getProperties()
+            $this->filter->read()->toArray()
         );
     }
 
@@ -210,7 +210,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldStar' => 'true'],
-            $this->filter->star()->getProperties()
+            $this->filter->star()->toArray()
         );
     }
 
@@ -218,7 +218,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['forwardTo' => 'foo@example.com'],
-            $this->filter->forward('foo@example.com')->getProperties()
+            $this->filter->forward('foo@example.com')->toArray()
         );
     }
 
@@ -226,7 +226,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldAlwaysMarkAsImportant' => 'true'],
-            $this->filter->important()->getProperties()
+            $this->filter->important()->toArray()
         );
     }
 
@@ -234,14 +234,14 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldNeverMarkAsImportant' => 'true'],
-            $this->filter->notImportant()->getProperties()
+            $this->filter->notImportant()->toArray()
         );
     }
     public function testCategorise()
     {
         $this->assertEquals(
             ['smartLabelToApply' => 'Foo'],
-            $this->filter->categorise('Foo')->getProperties()
+            $this->filter->categorise('Foo')->toArray()
         );
     }
 
@@ -268,7 +268,7 @@ class FilterTest extends TestCase
                 ->important()
                 ->neverSpam()
                 ->star()
-                ->getProperties()
+                ->toArray()
         );
     }
 }
