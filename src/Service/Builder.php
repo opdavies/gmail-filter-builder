@@ -2,7 +2,7 @@
 
 namespace Opdavies\GmailFilterBuilder\Service;
 
-use Opdavies\GmailFilterBuilder\Filter;
+use Opdavies\GmailFilterBuilder\Model\Filter;
 use Symfony\Component\Filesystem\Filesystem;
 
 class Builder
