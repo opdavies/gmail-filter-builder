@@ -58,7 +58,6 @@ class FilterTest extends TestCase
             ['from' => ['foo@example.com', 'bar@example.com']],
             $this->filter->from(['foo@example.com', 'bar@example.com'])->toArray()
         );
-
     }
 
     /**
