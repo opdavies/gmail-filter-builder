@@ -48,9 +48,11 @@ class Filter
      */
     public function from($values)
     {
-        $this->properties['from'] = collect($values)->map(function ($value) {
-            return trim($value);
-        })->all();
+        if (!empty($values)) {
+            $this->properties['from'] = collect($values)->map(function ($value) {
+                return trim($value);
+            })->all();
+        }
 
         return $this;
     }
@@ -62,9 +64,11 @@ class Filter
      */
     public function to($values)
     {
-        $this->properties['to'] = collect($values)->map(function ($value) {
-            return trim($value);
-        })->all();
+        if (!empty($values)) {
+            $this->properties['to'] = collect($values)->map(function ($value) {
+                return trim($value);
+            })->all();
+        }
 
         return $this;
     }

@@ -58,6 +58,18 @@ class FilterTest extends TestCase
             ['from' => ['foo@example.com', 'bar@example.com']],
             $this->filter->from(['foo@example.com', 'bar@example.com'])->getProperties()
         );
+
+    }
+
+    /**
+     * Test that no 'from' key exists if no values were entered.
+     *
+     * @covers Filter::from()
+     */
+    public function testNoFromPropertyExistsIfTheValueIsEmpty()
+    {
+        $this->assertArrayNotHasKey('from', $this->filter->from('')->getProperties());
+        $this->assertArrayNotHasKey('from', $this->filter->from([])->getProperties());
     }
 
     /**
@@ -74,6 +86,15 @@ class FilterTest extends TestCase
             ['to' => ['bar@example.com', 'baz@example.com']],
             $this->filter->to(['bar@example.com', 'baz@example.com'])->getProperties()
         );
+    }
+
+    /**
+     * Test that no 'to' key exists if values were entered.
+     */
+    public function testNoToPropertyExistsIfTheValueIsEmpty()
+    {
+        $this->assertArrayNotHasKey('to', $this->filter->to('')->getProperties());
+        $this->assertArrayNotHasKey('to', $this->filter->to([])->getProperties());
     }
 
     /**
