@@ -74,13 +74,15 @@ class Filter
     }
 
     /**
-     * @param string $subject
+     * @param string|array $values
      *
      * @return $this
      */
-    public function subject($subject)
+    public function subject($values)
     {
-        $this->properties['subject'] = $subject;
+        $this->properties['subject'] = collect($values)->map(function ($value) {
+            return json_encode($value);
+        })->implode('|');
 
         return $this;
     }

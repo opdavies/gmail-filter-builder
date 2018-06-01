@@ -102,8 +102,19 @@ class FilterTest extends TestCase
     public function testSubject()
     {
         $this->assertEquals(
-            ['subject' => 'Something'],
+            ['subject' => '"Something"'],
             $this->filter->subject('Something')->toArray()
+        );
+    }
+
+    /**
+     * Test that multiple subject conditions can be added.
+     */
+    public function testMultipleSubjectsCanBeAdded()
+    {
+        $this->assertEquals(
+          ['subject' => '"Test"|"Foo bar"'],
+          $this->filter->subject(['Test', 'Foo bar'])->toArray()
         );
     }
 
