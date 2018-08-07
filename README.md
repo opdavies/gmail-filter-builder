@@ -32,7 +32,7 @@ return [
 
 ### Step 3: Generate the XML
 
-Run `composer generate` to generate the XML for the filters and export it into a file.
+Run `./vendor/bin/generate-filters` to generate the XML for the filters and export it into a file.
 
 #### Options
 
