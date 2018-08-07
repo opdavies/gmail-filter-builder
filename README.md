@@ -25,11 +25,9 @@ For example:
 
 require_once __DIR__.'/vendor/autoload.php';
 
-$filters = [];
-
-// Add your filters.
-
-return $filters;
+return [
+    // Add your filters.
+];
 ```
 
 ### Step 3: Generate the XML
