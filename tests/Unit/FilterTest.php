@@ -134,9 +134,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::excludeChats
-   */
+    /**
+     * @covers ::excludeChats
+     */
     public function testExcludeChats()
     {
         $this->assertEquals(
@@ -217,9 +217,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::read
-   */
+    /**
+     * @covers ::read
+     */
     public function testMarkAsRead()
     {
         $this->assertEquals(
@@ -228,9 +228,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::star
-   */
+    /**
+     * @covers ::star
+     */
     public function testStar()
     {
         $this->assertEquals(
@@ -239,9 +239,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::forward
-   */
+    /**
+     * @covers ::forward
+     */
     public function testForwardTo()
     {
         $this->assertEquals(
@@ -250,9 +250,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::important
-   */
+    /**
+     * @covers ::important
+     */
     public function testMarkImportant()
     {
         $this->assertEquals(
@@ -261,9 +261,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::notImportant
-   */
+    /**
+     * @covers ::notImportant
+     */
     public function testMarkNotImportant()
     {
         $this->assertEquals(
@@ -272,9 +272,9 @@ class FilterTest extends TestCase
         );
     }
 
-  /**
-   * @covers ::categorise
-   */
+    /**
+     * @covers ::categorise
+     */
     public function testCategorise()
     {
         $this->assertEquals(
