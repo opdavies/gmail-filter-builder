@@ -55,6 +55,7 @@ _Conditions that a message must satisfy for the filter to be applied:_
 - `to` - if the message is to a certain name or email address.
 - `subject` - if the message has a certain subject.
 - `hasAttachment` - if the message has an attachment.
+- `list` - if the message is from a mailing list.
 - `excludeChats` - exclude chats from the results (false by default).
 
 ### Actions

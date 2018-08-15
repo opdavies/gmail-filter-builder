@@ -135,6 +135,17 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @covers ::list
+     */
+    public function testList()
+    {
+        $this->assertEquals(
+            ['hasTheWord' => 'list:foobar'],
+            $this->filter->list('foobar')->toArray()
+        );
+    }
+
+    /**
      * @covers ::excludeChats
      */
     public function testExcludeChats()
