@@ -5,6 +5,11 @@ namespace Opdavies\Tests\GmailFilterBuilder;
 use Opdavies\GmailFilterBuilder\Model\Filter;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Test creating new filters.
+ *
+ * @coversDefaultClass \Opdavies\GmailFilterBuilder\Model\Filter
+ */
 class FilterTest extends TestCase
 {
     /**
@@ -21,7 +26,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::has()
+     * @covers ::has
      */
     public function testHas()
     {
@@ -32,7 +37,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::hasNot()
+     * @covers ::hasNot
      */
     public function testHasNot()
     {
@@ -43,7 +48,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::from()
+     * @covers ::from
      */
     public function testFrom()
     {
@@ -63,7 +68,7 @@ class FilterTest extends TestCase
     /**
      * Test that no 'from' key exists if no values were entered.
      *
-     * @covers Filter::from()
+     * @covers ::from
      */
     public function testNoFromPropertyExistsIfTheValueIsEmpty()
     {
@@ -72,7 +77,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::to()
+     * @covers ::to
      */
     public function testTo()
     {
@@ -97,7 +102,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::subject()
+     * @covers ::subject
      */
     public function testSubject()
     {
@@ -119,7 +124,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::hasAttachment()
+     * @covers ::hasAttachment
      */
     public function testHasAttachment()
     {
@@ -129,6 +134,9 @@ class FilterTest extends TestCase
         );
     }
 
+  /**
+   * @covers ::excludeChats
+   */
     public function testExcludeChats()
     {
         $this->assertEquals(
@@ -136,8 +144,9 @@ class FilterTest extends TestCase
             $this->filter->excludeChats()->toArray()
         );
     }
+
     /**
-     * @covers Filter::label()
+     * @covers ::label
      */
     public function testLabel()
     {
@@ -148,7 +157,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::archive()
+     * @covers ::archive
      */
     public function testArchive()
     {
@@ -159,7 +168,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::labelAndArchive()
+     * @covers ::labelAndArchive
      */
     public function testLabelAndArchive()
     {
@@ -170,7 +179,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::spam()
+     * @covers ::spam
      */
     public function testSpam()
     {
@@ -184,7 +193,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::neverSpam()
+     * @covers ::neverSpam
      */
     public function testNeverSpam()
     {
@@ -198,7 +207,7 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers Filter::trash()
+     * @covers ::trash
      */
     public function testTrash()
     {
@@ -208,6 +217,9 @@ class FilterTest extends TestCase
         );
     }
 
+  /**
+   * @covers ::read
+   */
     public function testMarkAsRead()
     {
         $this->assertEquals(
@@ -216,6 +228,9 @@ class FilterTest extends TestCase
         );
     }
 
+  /**
+   * @covers ::star
+   */
     public function testStar()
     {
         $this->assertEquals(
@@ -224,6 +239,9 @@ class FilterTest extends TestCase
         );
     }
 
+  /**
+   * @covers ::forward
+   */
     public function testForwardTo()
     {
         $this->assertEquals(
@@ -232,6 +250,9 @@ class FilterTest extends TestCase
         );
     }
 
+  /**
+   * @covers ::important
+   */
     public function testMarkImportant()
     {
         $this->assertEquals(
@@ -240,6 +261,9 @@ class FilterTest extends TestCase
         );
     }
 
+  /**
+   * @covers ::notImportant
+   */
     public function testMarkNotImportant()
     {
         $this->assertEquals(
@@ -247,6 +271,10 @@ class FilterTest extends TestCase
             $this->filter->notImportant()->toArray()
         );
     }
+
+  /**
+   * @covers ::categorise
+   */
     public function testCategorise()
     {
         $this->assertEquals(
