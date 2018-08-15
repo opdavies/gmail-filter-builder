@@ -98,6 +98,20 @@ class Filter
     }
 
     /**
+     * Filter a message if it was sent from a mailing list.
+     *
+     * @param $value The mailing list address
+     *
+     * @return $this
+     */
+    public function list($value)
+    {
+        $this->has("list:{$value}");
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function excludeChats()
