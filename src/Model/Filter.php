@@ -104,7 +104,7 @@ class Filter
      *
      * @return $this
      */
-    public function list($value)
+    public function fromList($value)
     {
         $this->has("list:{$value}");
 

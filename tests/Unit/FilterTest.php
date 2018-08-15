@@ -135,13 +135,13 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers ::list
+     * @covers ::fromList
      */
-    public function testList()
+    public function testFromList()
     {
         $this->assertEquals(
             ['hasTheWord' => 'list:foobar'],
-            $this->filter->list('foobar')->toArray()
+            $this->filter->fromList('foobar')->toArray()
         );
     }
 
