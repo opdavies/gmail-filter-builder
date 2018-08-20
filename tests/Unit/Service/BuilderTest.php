@@ -1,5 +1,7 @@
 <?php
 
+namespace Opdavies\Tests\GmailFilterBuilder\Service;
+
 use Opdavies\GmailFilterBuilder\Model\Filter;
 use Opdavies\GmailFilterBuilder\Service\Builder;
 use PHPUnit\Framework\TestCase;
