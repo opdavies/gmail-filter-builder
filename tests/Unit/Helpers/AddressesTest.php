@@ -17,12 +17,10 @@ class AddressesTest extends TestCase
      */
     public function testLoad()
     {
-        $expected = [
+        $this->assertEquals([
             'foo@example.com',
             'bar@example.com'
-        ];
-
-        $this->assertEquals($expected, FakeAddresses::load());
+        ], FakeAddresses::load());
     }
 }
 
