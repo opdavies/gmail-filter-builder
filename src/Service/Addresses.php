@@ -1,9 +1,9 @@
 <?php
 
-namespace Opdavies\GmailFilterBuilder\Helpers;
+namespace Opdavies\GmailFilterBuilder\Service;
 
 /**
- * A helper class for loading addresses from separate files.
+ * A service for loading addresses from separate files.
  */
 class Addresses
 {

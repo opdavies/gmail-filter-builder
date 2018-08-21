@@ -2,13 +2,13 @@
 
 namespace Opdavies\Tests\GmailFilterBuilder\Model;
 
-use Opdavies\GmailFilterBuilder\Helpers\Addresses;
+use Opdavies\GmailFilterBuilder\Service\Addresses;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Test loading addresses from a separate file.
  *
- * @coversDefaultClass \Opdavies\GmailFilterBuilder\Helpers\Addresses
+ * @coversDefaultClass \Opdavies\GmailFilterBuilder\Service\Addresses
  */
 class AddressesTest extends TestCase
 {
