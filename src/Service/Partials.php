@@ -36,7 +36,7 @@ class Partials
      *
      * @return string The full path.
      */
-    protected function getFilePattern(string $directoryName)
+    protected function getFilePattern($directoryName)
     {
         return getcwd() . DIRECTORY_SEPARATOR . $directoryName . DIRECTORY_SEPARATOR . '*.php';
     }
