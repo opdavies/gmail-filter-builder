@@ -31,6 +31,6 @@ class FakeAddresses extends Addresses
      */
     protected function getDirectoryPath()
     {
-        return __DIR__ . '/../../stubs/';
+        return __DIR__ . '/../../stubs/addresses/';
     }
 }
