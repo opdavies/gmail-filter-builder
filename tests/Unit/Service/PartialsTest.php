@@ -29,7 +29,7 @@ class FakePartials extends Partials
     /**
      * {@inheritdoc}
      */
-    protected function getFilePattern(string $directoryName)
+    protected function getFilePattern($directoryName)
     {
         return __DIR__ . '/../../stubs/filters/*.php';
     }
