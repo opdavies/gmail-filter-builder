@@ -19,7 +19,7 @@ class Partials
         $files = (new static())->getFilePattern($directoryName);
 
         return collect(glob($files))
-            ->map(function (string $filename) {
+            ->map(function ($filename) {
                 return include $filename;
             })
             ->flatten(1)
