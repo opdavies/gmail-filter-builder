@@ -38,6 +38,6 @@ class Partials
      */
     protected function getFilePattern(string $directoryName)
     {
-        return __DIR__ . DIRECTORY_SEPARATOR . $directoryName . DIRECTORY_SEPARATOR . '/*.php';
+        return getcwd() . DIRECTORY_SEPARATOR . $directoryName . DIRECTORY_SEPARATOR . '*.php';
     }
 }
