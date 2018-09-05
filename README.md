@@ -77,7 +77,9 @@ _Actions you can apply to messages that match the conditions:_
 
 ## Loading Filters from Partials
 
-If you want to split your filters into different partials, return an array of filters from each partial and add `return Opdavies\GmailFilterBuilder\Service\Partials::load()` to `filters.php`. This defaults to a directory called `filters`, but you can specify an alternative directory name as an argument.
+If you want to split your filters into different partials, return an array of filters from each partial and add `return Opdavies\GmailFilterBuilder\Service\Partials::load()` to `filters.php`.
+
+This defaults to a directory called `filters`, but you can specify an alternative directory name as an argument.
 
 ## Loading Addresses from a Separate File
 
