@@ -75,6 +75,27 @@ _Actions you can apply to messages that match the conditions:_
 - `notImportant` - mark the message as not important.
 - `categorise` - apply a smart label to the message.
 
+## Loading Filters from Partials
+
+If you want to split your filters into different partials, return an array of filters from each partial and add `return Opdavies\GmailFilterBuilder\Service\Partials::load()` to `filters.php`. This defaults to a directory called `filters`, but you can specify an alternative directory name as an argument.
+
+## Loading Addresses from a Separate File
+
+If you want to filter based on the `to` address and not include your addresses within the filters repository, you can include them from within a different file using `Addresses::load()`:
+
+```
+$myAddresses = Addresses::load('my-addresses.php');
+
+return [
+    Filter::create()
+        ->from('foo@example.com')
+        ->to($myAddresses)
+        ->trash(),
+];
+```
+
+In this example, the addresses are returned as an array from `~/.gmail-filters/my-addresses.php` and then used as a condition in the filter.
+
 ## Filter Examples
 
 ```php
