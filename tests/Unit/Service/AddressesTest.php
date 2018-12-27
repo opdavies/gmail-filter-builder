@@ -4,6 +4,7 @@ namespace Opdavies\Tests\GmailFilterBuilder\Service;
 
 use Opdavies\GmailFilterBuilder\Service\Addresses;
 use PHPUnit\Framework\TestCase;
+use Tightenco\Collect\Support\Collection;
 
 /**
  * Test loading addresses from a separate file.
@@ -29,7 +30,7 @@ class FakeAddresses extends Addresses
     /**
      * {@inheritdoc}
      */
-    protected function getDirectoryPaths()
+    protected function getDirectoryPaths(): Collection
     {
         return collect(__DIR__ . '/../../stubs/addresses/');
     }

@@ -2,6 +2,8 @@
 
 namespace Opdavies\GmailFilterBuilder\Service;
 
+use Tightenco\Collect\Support\Collection;
+
 /**
  * A service for loading addresses from separate files.
  */
@@ -14,7 +16,7 @@ class Addresses
      *
      * @return array
      */
-    public static function load($filename = 'my-addresses.php')
+    public static function load(string $filename = 'my-addresses.php'): array
     {
         $file = (new static())->getDirectoryPaths()
             ->map(function ($path) use ($filename) {
@@ -34,9 +36,9 @@ class Addresses
     /**
      * Get the potential directory names containing the addresses file.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function getDirectoryPaths()
+    protected function getDirectoryPaths(): Collection
     {
         return collect([
             getenv('HOME') . DIRECTORY_SEPARATOR . '.gmail-filters' . DIRECTORY_SEPARATOR,
