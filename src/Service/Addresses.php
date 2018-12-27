@@ -8,11 +8,6 @@ namespace Opdavies\GmailFilterBuilder\Service;
 class Addresses
 {
     /**
-     * The name of the default directory containing the address files.
-     */
-    const DIRECTORY_NAME = '.gmail-filters';
-
-    /**
      * Load addresses from a file.
      *
      * @param string $filename The filename to load.
@@ -21,7 +16,15 @@ class Addresses
      */
     public static function load($filename = 'my-addresses.php')
     {
-        if (file_exists($file = (new static())->getDirectoryPath() . $filename)) {
+        $file = (new static())->getDirectoryPaths()
+            ->map(function ($path) use ($filename) {
+                return $path . $filename;
+            })
+            ->first(function ($file) {
+                return file_exists($file);
+            });
+
+        if ($file) {
             return include $file;
         }
 
@@ -29,14 +32,15 @@ class Addresses
     }
 
     /**
-     * Get the directory name containing the addresses file.
+     * Get the potential directory names containing the addresses file.
      *
-     * Defaults to a .gmail-filters directory within the user's home directory.
-     *
-     * @return string
+     * @return \Illuminate\Support\Collection
      */
-    protected function getDirectoryPath()
+    protected function getDirectoryPaths()
     {
-        return getenv('HOME') . DIRECTORY_SEPARATOR . self::DIRECTORY_NAME . DIRECTORY_SEPARATOR;
+        return collect([
+            getenv('HOME') . DIRECTORY_SEPARATOR . '.gmail-filters' . DIRECTORY_SEPARATOR,
+            getenv('HOME') . DIRECTORY_SEPARATOR . '.config/gmail-filters' . DIRECTORY_SEPARATOR,
+        ]);
     }
 }

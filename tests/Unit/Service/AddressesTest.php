@@ -29,8 +29,8 @@ class FakeAddresses extends Addresses
     /**
      * {@inheritdoc}
      */
-    protected function getDirectoryPath()
+    protected function getDirectoryPaths()
     {
-        return __DIR__ . '/../../stubs/addresses/';
+        return collect(__DIR__ . '/../../stubs/addresses/');
     }
 }
