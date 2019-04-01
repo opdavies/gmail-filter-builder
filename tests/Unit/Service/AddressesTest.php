@@ -23,6 +23,13 @@ class AddressesTest extends TestCase
             'bar@example.com'
         ], FakeAddresses::load());
     }
+
+    /** @test */
+    public function throw_an_exception_an_address_file_does_not_exist() {
+      $this->expectException(\RuntimeException::class);
+
+      Addresses::load('does-not-exist');
+    }
 }
 
 class FakeAddresses extends Addresses

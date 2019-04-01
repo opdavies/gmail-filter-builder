@@ -2,6 +2,7 @@
 
 namespace Opdavies\GmailFilterBuilder\Service;
 
+use Opdavies\GmailFilterBuilder\Exception\PartialNotFoundException;
 use Tightenco\Collect\Support\Collection;
 
 /**
@@ -26,11 +27,13 @@ class Addresses
                 return file_exists($file);
             });
 
-        if ($file) {
-            return include $file;
+        if (!$file) {
+          throw new PartialNotFoundException(vsprintf('%s does not exist.', [
+            $filename,
+          ]));
         }
 
-        return [];
+        return include $file;
     }
 
     /**
