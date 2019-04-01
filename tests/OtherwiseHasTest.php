@@ -46,4 +46,34 @@ class OtherwiseHasTest extends TestCase
             $this->assertTrue($filter->getConditions()->contains('to:me@example.com'));
         });
     }
+
+    /** @test */
+    public function different_conditions_are_negated_in_subsequent_filters()
+    {
+        $filters = FilterGroup::if(
+            Filter::create()
+                ->has('to:me@example.com subject:Foo')
+                ->read()
+        )->otherwise(
+            Filter::create()
+                ->has('to:me@example.com subject:Bar')
+                ->trash()
+        )->otherwise(
+            Filter::create()
+                ->has('to:me@example.com subject:Baz')
+                ->trash()
+        );
+
+        $this->assertSame('subject:Foo', $filters->all()->get(0)->getConditions()->get(1));
+
+        // The subject condition from the first filter should be present but
+        // negated.
+        $this->assertSame('!subject:Foo', $filters->all()->get(1)->getConditions()->get(1));
+
+        // Both subject conditions from both previous filters should be present
+        // but negated.
+//        $this->assertSame('!subject:[Foo|Bar]', $filters->all()->get(2)->getConditions()->get(1));
+        $this->assertSame('!subject:Foo', $filters->all()->get(2)->getConditions()->get(1));
+        $this->assertSame('!subject:Bar', $filters->all()->get(2)->getConditions()->get(2));
+    }
 }
