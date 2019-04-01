@@ -43,6 +43,7 @@
         "sort-packages": true
     },
     "scripts": {
+        "style": "php-cs-fixer fix",
         "test": "phpunit"
     }
 }
