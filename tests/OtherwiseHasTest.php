@@ -6,7 +6,7 @@ use Opdavies\GmailFilterBuilder\Model\Filter;
 use Opdavies\GmailFilterBuilder\Model\FilterGroup;
 use PHPUnit\Framework\TestCase;
 
-class OtherwiseTest extends TestCase
+class OtherwiseHasTest extends TestCase
 {
 
     /** @test */
