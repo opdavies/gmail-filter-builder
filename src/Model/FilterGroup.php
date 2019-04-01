@@ -30,8 +30,13 @@ class FilterGroup
         return $this;
     }
 
-    public function toArray(): array
+    /**
+     * Get all filters within this filter group.
+     *
+     * @return Collection
+     */
+    public function all(): Collection
     {
-        return $this->filters->toArray();
+        return $this->filters;
     }
 }

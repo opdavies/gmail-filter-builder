@@ -26,6 +26,24 @@ class OtherwiseTest extends TestCase
                 ->trash()
       );
 
-        $this->assertCount(3, $filters->toArray());
+        $this->assertCount(3, $filters->all());
+    }
+
+    /** @test */
+    public function same_conditions_are_kept_between_filters()
+    {
+        $filters = FilterGroup::if(
+            Filter::create()
+                ->has('to:me@example.com subject:Foo')
+                ->read()
+        )->otherwise(
+            Filter::create()
+                ->has('to:me@example.com subject:Bar')
+                ->trash()
+        );
+
+        $filters->all()->each(function (Filter $filter) {
+            $this->assertTrue($filter->getConditions()->contains('to:me@example.com'));
+        });
     }
 }
