@@ -26,10 +26,11 @@ class AddressesTest extends TestCase
     }
 
     /** @test */
-    public function throw_an_exception_if_an_address_file_does_not_exist() {
-      $this->expectException(PartialNotFoundException::class);
+    public function throw_an_exception_if_an_address_file_does_not_exist()
+    {
+        $this->expectException(PartialNotFoundException::class);
 
-      Addresses::load('does-not-exist');
+        Addresses::load('does-not-exist');
     }
 }
 

@@ -28,7 +28,7 @@ class Addresses
             });
 
         if (!$file) {
-          throw new PartialNotFoundException(vsprintf('%s does not exist.', [
+            throw new PartialNotFoundException(vsprintf('%s does not exist.', [
             $filename,
           ]));
         }

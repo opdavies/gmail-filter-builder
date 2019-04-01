@@ -2,4 +2,6 @@
 
 namespace Opdavies\GmailFilterBuilder\Exception;
 
-class PartialNotFoundException extends \RuntimeException {}
+class PartialNotFoundException extends \RuntimeException
+{
+}
