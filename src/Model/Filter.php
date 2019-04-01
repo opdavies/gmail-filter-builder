@@ -2,12 +2,22 @@
 
 namespace Opdavies\GmailFilterBuilder\Model;
 
+use Tightenco\Collect\Support\Collection;
+
 class Filter
 {
     /**
      * @var array
      */
     private $properties = [];
+
+    /** @var Collection */
+    private $conditions;
+
+    public function __construct()
+    {
+        $this->conditions = new Collection();
+    }
 
     /**
      * @return static
@@ -25,6 +35,10 @@ class Filter
     public function has($value)
     {
         $this->properties['hasTheWord'] = $value;
+
+        $this->conditions = $this->conditions->merge(
+            new Collection(preg_split('/\s+/', $value))
+        );
 
         return $this;
     }
@@ -270,5 +284,10 @@ class Filter
     public function toArray()
     {
         return $this->properties;
+    }
+
+    public function getConditions(): Collection
+    {
+        return $this->conditions;
     }
 }

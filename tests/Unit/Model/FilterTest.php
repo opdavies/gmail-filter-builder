@@ -320,4 +320,14 @@ class FilterTest extends TestCase
                 ->toArray()
         );
     }
+
+    /** @test */
+    public function conditions_can_be_split_and_stored()
+    {
+        $filter = Filter::create()
+            ->has('to:me@example.com subject:Something')
+            ->archive();
+
+        $this->assertCount(2, $filter->getConditions());
+    }
 }
