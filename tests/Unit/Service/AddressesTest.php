@@ -2,6 +2,7 @@
 
 namespace Opdavies\Tests\GmailFilterBuilder\Service;
 
+use Opdavies\GmailFilterBuilder\Exception\PartialNotFoundException;
 use Opdavies\GmailFilterBuilder\Service\Addresses;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
@@ -26,7 +27,7 @@ class AddressesTest extends TestCase
 
     /** @test */
     public function throw_an_exception_if_an_address_file_does_not_exist() {
-      $this->expectException(\RuntimeException::class);
+      $this->expectException(PartialNotFoundException::class);
 
       Addresses::load('does-not-exist');
     }
