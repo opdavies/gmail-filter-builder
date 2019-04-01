@@ -118,8 +118,8 @@ class FilterTest extends TestCase
     public function testMultipleSubjectsCanBeAdded()
     {
         $this->assertEquals(
-          ['subject' => '"Test"|"Foo bar"'],
-          $this->filter->subject(['Test', 'Foo bar'])->toArray()
+            ['subject' => '"Test"|"Foo bar"'],
+            $this->filter->subject(['Test', 'Foo bar'])->toArray()
         );
     }
 
