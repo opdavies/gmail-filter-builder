@@ -39,4 +39,9 @@ class FilterGroup
     {
         return $this->filters;
     }
+
+    public function getConditions(): Collection
+    {
+        return $this->filters->map->getConditions();
+    }
 }
