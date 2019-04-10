@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateCommand extends Command
 {
@@ -34,26 +35,30 @@ class GenerateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $inputFile = $input->getOption('input-file');
-        $outputFile = $input->getOption('output-file');
-
-        if (file_exists(__DIR__.'/'.$inputFile)) {
-            $filters = require_once __DIR__.'/'.$inputFile;
-        } elseif (file_exists(__DIR__.'/../../../../../../'.$inputFile)) {
-            # Installed as a dependency within "vendor".
-            $filters = require_once __DIR__.'/../../../../../../'.$inputFile;
-        } else {
-            throw new \Exception('No filters.php file found.');
-        }
-
         $io = new SymfonyStyle($input, $output);
 
         try {
-            new Builder($filters, $outputFile);
+            new Builder($this->filters($input), $outputFile = $this->outputFile($input));
 
             $io->success(sprintf('%s file generated.', $outputFile));
         } catch (IOException $e) {
             $io->error($e->getMessage());
         }
+    }
+
+    private function outputFile(InputInterface $input): string
+    {
+        return $input->getOption('output-file') ?? getcwd() . '/filters.xml';
+    }
+
+    private function filters(InputInterface $input): array
+    {
+        $fs = new Filesystem();
+
+        if (!$fs->exists($inputFile = $input->getOption('input-file') ?? getcwd() . '/filters.php')) {
+            throw new \RuntimeException('No input file found.');
+        }
+
+        return require_once $inputFile;
     }
 }
