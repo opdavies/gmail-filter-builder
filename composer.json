@@ -25,7 +25,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Opdavies\\GmailFilterBuilder\\": "src/"
+            "Opdavies\\GmailFilterBuilder\\": "src/",
+            "Spatie\\CollectionMacros\\Macros\\": "src/Collection/Macros/"
         }
     },
     "autoload-dev": {

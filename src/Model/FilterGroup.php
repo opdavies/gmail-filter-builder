@@ -2,6 +2,7 @@
 
 namespace Opdavies\GmailFilterBuilder\Model;
 
+use Spatie\CollectionMacros\Macros\EachCons;
 use Tightenco\Collect\Support\Collection;
 
 class FilterGroup
@@ -44,4 +45,30 @@ class FilterGroup
     {
         return $this->filters->map->getConditions();
     }
+
+    public function getUpdatedConditions(): Collection
+    {
+        Collection::macro('eachCons', ((new EachCons())->__invoke()));
+
+        $conditions = clone $this->getConditions();
+
+        return $conditions->eachCons(2)->map(function ($filter) {
+            list($previous, $current) = $filter;
+
+            return $previous->zip($current)->map(function (Collection $a): array {
+//                dump(['a' => $a]);
+
+                if ($a[1] === null) {
+                    return [$a[0]];
+                }
+
+                if ($a[0] == $a[1]) {
+                    return [$a[0]];
+                }
+                return [$a[0], "!{$a[1]}"];
+            })->flatten(1);
+        });
+    }
+
+
 }

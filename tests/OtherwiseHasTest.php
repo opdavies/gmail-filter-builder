@@ -89,20 +89,16 @@ class OtherwiseHasTest extends TestCase
                 ->trash()
         )->otherwise(
             Filter::create()
-                ->has('to:me@example.com subject:Baz')
+                ->has('to:me@example.com')
                 ->trash()
         );
 
-        $this->assertSame('subject:Foo', $filters->all()->get(0)->getConditions()->get(1));
+        $expected = [
+          ['to:me@example.com', 'subject:Foo'],
+          ['to:me@example.com', '!subject:Foo', 'subject:Bar'],
+          ['to:me@example.com', '!subject:Foo', '!subject:Bar'],
+        ];
 
-        // The subject condition from the first filter should be present but
-        // negated.
-        $this->assertSame('!subject:Foo', $filters->all()->get(1)->getConditions()->get(1));
-
-        // Both subject conditions from both previous filters should be present
-        // but negated.
-//        $this->assertSame('!subject:[Foo|Bar]', $filters->all()->get(2)->getConditions()->get(1));
-        $this->assertSame('!subject:Foo', $filters->all()->get(2)->getConditions()->get(1));
-        $this->assertSame('!subject:Bar', $filters->all()->get(2)->getConditions()->get(2));
+        $this->assertSame($expected, $filters->getUpdatedConditions()->toArray());
     }
 }
