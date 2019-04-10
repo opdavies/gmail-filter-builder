@@ -22,8 +22,8 @@ class GenerateCommand extends Command
         $this
             ->setName(self::NAME)
             ->setDefinition([
-                new InputOption('input-file', null, InputOption::VALUE_OPTIONAL, 'The name of the PHP file containing your filters.', 'filters.php'),
-                new InputOption('output-file', null, InputOption::VALUE_OPTIONAL, 'The name of the XML file to generate.', 'filters.xml')
+                new InputOption('input-file', 'i', InputOption::VALUE_OPTIONAL, 'The name of the PHP file containing your filters.', 'filters.php'),
+                new InputOption('output-file', 'o', InputOption::VALUE_OPTIONAL, 'The name of the XML file to generate.', 'filters.xml')
             ])
             ->setDescription('Generates XML for Gmail filters.')
         ;
