@@ -143,6 +143,11 @@ class FilterTest extends TestCase
             ['hasTheWord' => 'list:foobar'],
             $this->filter->fromList('foobar')->toArray()
         );
+
+        $this->assertEquals(
+            ['hasTheWord' => 'list:list-one.com|list-two.com'],
+            $this->filter->fromList(['list-one.com', 'list-two.com'])->toArray()
+        );
     }
 
     /**

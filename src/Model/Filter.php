@@ -4,6 +4,9 @@ namespace Opdavies\GmailFilterBuilder\Model;
 
 class Filter
 {
+    /** @var string */
+    const SEPARATOR = '|';
+
     /**
      * @var array
      */
@@ -100,12 +103,13 @@ class Filter
     /**
      * Filter a message if it was sent from a mailing list.
      *
-     * @param $value The mailing list address
+     * @param string|array $value The mailing list address
      *
      * @return $this
      */
     public function fromList($value)
     {
+        $value = collect($value)->implode(self::SEPARATOR);
         $this->has("list:{$value}");
 
         return $this;
