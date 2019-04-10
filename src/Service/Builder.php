@@ -39,7 +39,7 @@ class Builder
         $this->build();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->build();
     }
@@ -49,7 +49,7 @@ class Builder
      *
      * @return string
      */
-    public function getXml()
+    public function getXml(): string
     {
         return $this->xml;
     }
@@ -59,7 +59,7 @@ class Builder
      *
      * @return string
      */
-    private function build()
+    private function build(): void
     {
         $prefix = "<?xml version='1.0' encoding='UTF-8'?>" . PHP_EOL . "<feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>";
         $suffix = '</feed>';
@@ -82,11 +82,13 @@ class Builder
      *
      * @return string
      */
-    private function buildEntry(Filter $filter)
+    private function buildEntry(Filter $filter): string
     {
-        $entry = collect($filter->getProperties())->map(function ($value, $key) {
-            return $this->buildProperty($value, $key);
-        })->implode(PHP_EOL);
+        $entry = collect($filter->toArray())
+            ->map(function ($value, $key): string {
+                return $this->buildProperty($value, $key);
+            })
+            ->implode(PHP_EOL);
 
         return collect(['<entry>', $entry, '</entry>'])->implode(PHP_EOL);
     }
@@ -99,7 +101,7 @@ class Builder
      *
      * @return string
      */
-    private function buildProperty($value, $key)
+    private function buildProperty($value, $key): string
     {
         if (collect(['from', 'to'])->contains($key)) {
             $value = $this->implode($value);
@@ -114,7 +116,7 @@ class Builder
     /**
      * Implode values with the appropriate prefix, suffix and separator.
      */
-    private function implode($value, $separator = '|')
+    private function implode($value, $separator = '|'): string
     {
         if (is_string($value)) {
             return $value;

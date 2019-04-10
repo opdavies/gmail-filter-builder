@@ -14,7 +14,7 @@ class Partials
      *
      * @return array The loaded filters.
      */
-    public static function load($directoryName = 'filters')
+    public static function load($directoryName = 'filters'): array
     {
         $files = static::getFilePattern($directoryName);
 
@@ -23,7 +23,7 @@ class Partials
                 return include $filename;
             })
             ->flatten(1)
-            ->all();
+            ->toArray();
     }
 
     /**
@@ -36,7 +36,7 @@ class Partials
      *
      * @return string The full path.
      */
-    protected static function getFilePattern($directoryName)
+    protected static function getFilePattern($directoryName): string
     {
         return getcwd() . DIRECTORY_SEPARATOR . $directoryName . DIRECTORY_SEPARATOR . '*.php';
     }
