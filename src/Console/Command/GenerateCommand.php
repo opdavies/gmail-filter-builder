@@ -40,7 +40,7 @@ class GenerateCommand extends Command
 
         try {
             // TODO: Inject this.
-            new Builder($this->filters($input), $outputFile = $this->outputFile($input));
+            new Builder($this->filters($input), $outputFile = $this->outputFile($input), true, $input->getOption('expanded'));
 
             $io->success(sprintf('%s file generated.', $outputFile));
         } catch (IOException $e) {
@@ -61,6 +61,6 @@ class GenerateCommand extends Command
             throw new \RuntimeException('No input file found.');
         }
 
-        return require_once $inputFile;
+        return require $inputFile;
     }
 }
