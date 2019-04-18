@@ -2,6 +2,7 @@
 
 namespace Opdavies\GmailFilterBuilder\Container;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -13,7 +14,7 @@ class CommandCompilerClass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('app.cli');
+        $definition = $container->findDefinition(Application::class);
         $taggedServices = $container->findTaggedServiceIds('ConsoleCommand');
 
         foreach ($taggedServices as $id => $tags) {

@@ -38,6 +38,7 @@ class GenerateCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
+            // TODO: Inject this.
             new Builder($this->filters($input), $outputFile = $this->outputFile($input));
 
             $io->success(sprintf('%s file generated.', $outputFile));
