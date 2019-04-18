@@ -133,7 +133,7 @@ class Builder
         return sprintf('(%s)', collect($value)->implode($separator));
     }
 
-    private function glue()
+    private function glue(): ?string
     {
         return $this->expanded ? PHP_EOL : null;
     }
