@@ -1,0 +1,1 @@
+<?xml version='1.0' encoding='UTF-8'?><feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'><entry><apps:property name='from' value='example.com'/><apps:property name='label' value='Test'/><apps:property name='shouldArchive' value='true'/></entry></feed>
