@@ -20,7 +20,7 @@ class BuilderTest extends TestCase
             ->star()
             ->important();
 
-        $result = new Builder([$filterA, $filterB], '', false);
+        $result = new Builder([$filterA, $filterB], '', false, true);
 
         $expected = <<<EOF
 <?xml version='1.0' encoding='UTF-8'?>

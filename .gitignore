@@ -2,3 +2,4 @@
 composer.lock
 filters.php
 *.xml
+!/tests/fixtures/*/*.xml

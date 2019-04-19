@@ -24,7 +24,8 @@ class GenerateCommand extends Command
             ->setName(self::NAME)
             ->setDefinition([
                 new InputOption('input-file', 'i', InputOption::VALUE_OPTIONAL, 'The name of the PHP file containing your filters.', 'filters.php'),
-                new InputOption('output-file', 'o', InputOption::VALUE_OPTIONAL, 'The name of the XML file to generate.', 'filters.xml')
+                new InputOption('output-file', 'o', InputOption::VALUE_OPTIONAL, 'The name of the XML file to generate.', 'filters.xml'),
+                new InputOption('expanded', 'e', InputOption::VALUE_NONE, 'Whether to generate expanded XML.')
             ])
             ->setDescription('Generates XML for Gmail filters.')
         ;
@@ -39,7 +40,7 @@ class GenerateCommand extends Command
 
         try {
             // TODO: Inject this.
-            new Builder($this->filters($input), $outputFile = $this->outputFile($input));
+            new Builder($this->filters($input), $outputFile = $this->outputFile($input), true, $input->getOption('expanded'));
 
             $io->success(sprintf('%s file generated.', $outputFile));
         } catch (IOException $e) {
@@ -60,6 +61,6 @@ class GenerateCommand extends Command
             throw new \RuntimeException('No input file found.');
         }
 
-        return require_once $inputFile;
+        return require $inputFile;
     }
 }
