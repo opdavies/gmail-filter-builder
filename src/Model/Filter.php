@@ -6,6 +6,9 @@ use Tightenco\Collect\Support\Collection;
 
 class Filter
 {
+    /** @var string */
+    const SEPARATOR = '|';
+
     /**
      * @var array
      */
@@ -22,7 +25,7 @@ class Filter
     /**
      * @return static
      */
-    public static function create()
+    public static function create(): self
     {
         return new static();
     }
@@ -32,7 +35,7 @@ class Filter
      *
      * @return $this
      */
-    public function has($value)
+    public function has(string $value): self
     {
         $this->properties['hasTheWord'] = $value;
 
@@ -48,7 +51,7 @@ class Filter
      *
      * @return $this
      */
-    public function hasNot($value)
+    public function hasNot(string $value): self
     {
         $this->properties['doesNotHaveTheWord'] = $value;
 
@@ -60,7 +63,7 @@ class Filter
      *
      * @return $this
      */
-    public function from($values)
+    public function from($values): self
     {
         if (!empty($values)) {
             $this->properties['from'] = collect($values)->map(function ($value) {
@@ -76,7 +79,7 @@ class Filter
      *
      * @return $this
      */
-    public function to($values)
+    public function to($values): self
     {
         if (!empty($values)) {
             $this->properties['to'] = collect($values)->map(function ($value) {
@@ -92,7 +95,7 @@ class Filter
      *
      * @return $this
      */
-    public function subject($values)
+    public function subject($values): self
     {
         $this->properties['subject'] = collect($values)->map(function ($value) {
             return json_encode($value);
@@ -104,7 +107,7 @@ class Filter
     /**
      * @return $this
      */
-    public function hasAttachment()
+    public function hasAttachment(): self
     {
         $this->properties['hasAttachment'] = 'true';
 
@@ -114,12 +117,13 @@ class Filter
     /**
      * Filter a message if it was sent from a mailing list.
      *
-     * @param $value The mailing list address
+     * @param string|array $value The mailing list address
      *
      * @return $this
      */
-    public function fromList($value)
+    public function fromList($value): self
     {
+        $value = collect($value)->implode(self::SEPARATOR);
         $this->has("list:{$value}");
 
         return $this;
@@ -128,7 +132,7 @@ class Filter
     /**
      * @return $this
      */
-    public function excludeChats()
+    public function excludeChats(): self
     {
         $this->properties['excludeChats'] = 'true';
 
@@ -140,7 +144,7 @@ class Filter
      *
      * @return $this
      */
-    public function label($label)
+    public function label(string $label): self
     {
         $this->properties['label'] = $label;
 
@@ -150,7 +154,7 @@ class Filter
     /**
      * @return $this
      */
-    public function archive()
+    public function archive(): self
     {
         $this->properties['shouldArchive'] = 'true';
 
@@ -162,7 +166,7 @@ class Filter
      *
      * @return $this
      */
-    public function labelAndArchive($label)
+    public function labelAndArchive(string $label): self
     {
         $this->label($label)->archive();
 
@@ -172,7 +176,7 @@ class Filter
     /**
      * @return $this
      */
-    public function spam()
+    public function spam(): self
     {
         $this->properties['shouldSpam'] = 'true';
         $this->properties['shouldNeverSpam'] = 'false';
@@ -183,7 +187,7 @@ class Filter
     /**
      * @return $this
      */
-    public function neverSpam()
+    public function neverSpam(): self
     {
         $this->properties['shouldSpam'] = 'false';
         $this->properties['shouldNeverSpam'] = 'true';
@@ -194,7 +198,7 @@ class Filter
     /**
      * @return $this
      */
-    public function trash()
+    public function trash(): self
     {
         $this->properties['shouldTrash'] = 'true';
 
@@ -204,7 +208,7 @@ class Filter
     /**
      * @return $this
      */
-    public function read()
+    public function read(): self
     {
         $this->properties['markAsRead'] = 'true';
 
@@ -214,7 +218,7 @@ class Filter
     /**
      * @return $this
      */
-    public function star()
+    public function star(): self
     {
         $this->properties['shouldStar'] = 'true';
 
@@ -226,7 +230,7 @@ class Filter
      *
      * @return $this
      */
-    public function forward($to)
+    public function forward(string $to): self
     {
         $this->properties['forwardTo'] = $to;
 
@@ -236,7 +240,7 @@ class Filter
     /**
      * @return $this
      */
-    public function important()
+    public function important(): self
     {
         $this->properties['shouldAlwaysMarkAsImportant'] = 'true';
 
@@ -246,7 +250,7 @@ class Filter
     /**
      * @return $this
      */
-    public function notImportant()
+    public function notImportant(): self
     {
         $this->properties['shouldNeverMarkAsImportant'] = 'true';
 
@@ -258,7 +262,7 @@ class Filter
      *
      * @return $this
      */
-    public function categorise($category)
+    public function categorise(string $category): self
     {
         $this->properties['smartLabelToApply'] = $category;
 
@@ -271,7 +275,7 @@ class Filter
      * @return array
      * @deprecated toArray()
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -281,7 +285,7 @@ class Filter
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->properties;
     }

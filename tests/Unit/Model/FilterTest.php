@@ -26,9 +26,10 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers ::has
+     * @test
+     * @covers::has
      */
-    public function testHas()
+    public function can_filter_on_a_has_value()
     {
         $this->assertEquals(
             ['hasTheWord' => 'something'],
@@ -37,9 +38,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::hasNot
      */
-    public function testHasNot()
+    public function can_filter_on_a_has_not_value()
     {
         $this->assertEquals(
             ['doesNotHaveTheWord' => 'something'],
@@ -48,9 +50,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::from
      */
-    public function testFrom()
+    public function can_filter_based_on_the_sender()
     {
         // Ensure that we can set one from address.
         $this->assertEquals(
@@ -66,20 +69,20 @@ class FilterTest extends TestCase
     }
 
     /**
-     * Test that no 'from' key exists if no values were entered.
-     *
+     * @test
      * @covers ::from
      */
-    public function testNoFromPropertyExistsIfTheValueIsEmpty()
+    public function no_from_property_exists_if_the_value_is_empty()
     {
         $this->assertArrayNotHasKey('from', $this->filter->from('')->toArray());
         $this->assertArrayNotHasKey('from', $this->filter->from([])->toArray());
     }
 
     /**
+     * @test
      * @covers ::to
      */
-    public function testTo()
+    public function can_filter_based_on_the_recipient()
     {
         $this->assertEquals(
             ['to' => ['foo@example.com']],
@@ -92,31 +95,24 @@ class FilterTest extends TestCase
         );
     }
 
-    /**
-     * Test that no 'to' key exists if values were entered.
-     */
-    public function testNoToPropertyExistsIfTheValueIsEmpty()
+    /** @test */
+    public function no_to_property_exists_if_the_value_is_empty()
     {
         $this->assertArrayNotHasKey('to', $this->filter->to('')->toArray());
         $this->assertArrayNotHasKey('to', $this->filter->to([])->toArray());
     }
 
     /**
+     * @test
      * @covers ::subject
      */
-    public function testSubject()
+    public function can_filter_based_on_the_subject()
     {
         $this->assertEquals(
             ['subject' => '"Something"'],
             $this->filter->subject('Something')->toArray()
         );
-    }
 
-    /**
-     * Test that multiple subject conditions can be added.
-     */
-    public function testMultipleSubjectsCanBeAdded()
-    {
         $this->assertEquals(
             ['subject' => '"Test"|"Foo bar"'],
             $this->filter->subject(['Test', 'Foo bar'])->toArray()
@@ -124,9 +120,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::hasAttachment
      */
-    public function testHasAttachment()
+    public function can_filter_based_on_whether_there_is_an_attachment()
     {
         $this->assertEquals(
             ['hasAttachment' => 'true'],
@@ -135,20 +132,27 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::fromList
      */
-    public function testFromList()
+    public function can_filter_based_on_wether_it_was_sent_to_a_list()
     {
         $this->assertEquals(
             ['hasTheWord' => 'list:foobar'],
             $this->filter->fromList('foobar')->toArray()
         );
+
+        $this->assertEquals(
+            ['hasTheWord' => 'list:list-one.com|list-two.com'],
+            $this->filter->fromList(['list-one.com', 'list-two.com'])->toArray()
+        );
     }
 
     /**
+     * @test
      * @covers ::excludeChats
      */
-    public function testExcludeChats()
+    public function chats_can_be_excluded()
     {
         $this->assertEquals(
             ['excludeChats' => 'true'],
@@ -157,9 +161,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::label
      */
-    public function testLabel()
+    public function labels_can_be_added()
     {
         $this->assertEquals(
             ['label' => 'Foo'],
@@ -168,9 +173,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::archive
      */
-    public function testArchive()
+    public function messages_can_be_archived()
     {
         $this->assertEquals(
             ['shouldArchive' => 'true'],
@@ -179,9 +185,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::labelAndArchive
      */
-    public function testLabelAndArchive()
+    public function messages_can_be_labelled_and_archived()
     {
         $this->assertEquals(
             ['shouldArchive' => 'true', 'label' => 'Foo'],
@@ -190,9 +197,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::spam
      */
-    public function testSpam()
+    public function messages_can_be_marked_as_spam()
     {
         $this->assertEquals(
             [
@@ -204,9 +212,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::neverSpam
      */
-    public function testNeverSpam()
+    public function messages_can_be_marked_as_not_spam()
     {
         $this->assertEquals(
             [
@@ -218,9 +227,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::trash
      */
-    public function testTrash()
+    public function messages_can_be_deleted()
     {
         $this->assertEquals(
             ['shouldTrash' => 'true'],
@@ -229,9 +239,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::read
      */
-    public function testMarkAsRead()
+    public function messages_can_be_marked_as_read()
     {
         $this->assertEquals(
             ['markAsRead' => 'true'],
@@ -240,9 +251,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::star
      */
-    public function testStar()
+    public function messages_can_be_starred()
     {
         $this->assertEquals(
             ['shouldStar' => 'true'],
@@ -251,9 +263,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::forward
      */
-    public function testForwardTo()
+    public function messages_can_be_forwarded()
     {
         $this->assertEquals(
             ['forwardTo' => 'foo@example.com'],
@@ -262,9 +275,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::important
      */
-    public function testMarkImportant()
+    public function messages_can_be_marked_as_important()
     {
         $this->assertEquals(
             ['shouldAlwaysMarkAsImportant' => 'true'],
@@ -273,9 +287,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::notImportant
      */
-    public function testMarkNotImportant()
+    public function messages_can_be_marked_as_not_important()
     {
         $this->assertEquals(
             ['shouldNeverMarkAsImportant' => 'true'],
@@ -284,9 +299,10 @@ class FilterTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::categorise
      */
-    public function testCategorise()
+    public function messages_can_be_categorised()
     {
         $this->assertEquals(
             ['smartLabelToApply' => 'Foo'],
@@ -294,7 +310,8 @@ class FilterTest extends TestCase
         );
     }
 
-    public function testMethodsCanBeChained()
+    /** @test */
+    public function methods_can_be_chained()
     {
         $this->assertEquals(
             [

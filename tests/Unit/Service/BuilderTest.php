@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
 {
-    public function testBuild()
+    /** @test */
+    public function it_can_build_filters()
     {
         $filterA = (new Filter())
             ->from(['foo@example.com', 'test@example.com'])
@@ -20,7 +21,7 @@ class BuilderTest extends TestCase
             ->star()
             ->important();
 
-        $result = new Builder([$filterA, $filterB], '', false);
+        $result = new Builder([$filterA, $filterB], '', false, true);
 
         $expected = <<<EOF
 <?xml version='1.0' encoding='UTF-8'?>

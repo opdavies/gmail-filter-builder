@@ -1,0 +1,8 @@
+services:
+  Symfony\Component\Console\Application:
+    autowire: true
+
+  Opdavies\GmailFilterBuilder\Console\Command\GenerateCommand:
+    autowire: true
+    tags:
+      - { name: ConsoleCommand }

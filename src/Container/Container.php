@@ -11,7 +11,7 @@ class Container
     public function __construct()
     {
         $this->containerBuilder = new ContainerBuilder();
-        $loader = new YamlFileLoader($this->containerBuilder, new FileLocator(__DIR__.'/../../config'));
+        $loader = new YamlFileLoader($this->containerBuilder, new FileLocator(__DIR__.'/../../'));
         $loader->load('services.yml');
         $this->containerBuilder->addCompilerPass(new CommandCompilerClass());
         $this->containerBuilder->compile();

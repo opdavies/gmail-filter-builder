@@ -6,7 +6,7 @@
     "authors": [
         {
             "name": "Oliver Davies",
-            "email": "opdavies@gmail.com"
+            "email": "oliver@oliverdavies.uk"
         }
     ],
     "require": {
@@ -44,7 +44,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "style": "php-cs-fixer fix",
+        "lint": "php-cs-fixer fix",
         "test": "phpunit"
     }
 }

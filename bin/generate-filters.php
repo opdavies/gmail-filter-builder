@@ -13,6 +13,6 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 $container = new Container();
 
 /** @var Application $application */
-$application = $container->get('app.cli');
+$application = $container->get(Application::class);
 $application->setDefaultCommand(GenerateCommand::NAME);
 $application->run();
