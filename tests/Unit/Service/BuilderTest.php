@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
 {
-    public function testBuild()
+    /** @test */
+    public function it_can_build_filters()
     {
         $filterA = (new Filter())
             ->from(['foo@example.com', 'test@example.com'])

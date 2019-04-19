@@ -8,10 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 class PartialsTest extends TestCase
 {
-    /**
-     * Test loading partials from multiple partial files.
-     */
-    public function testLoadingFiltersFromPartials()
+    /** @test */
+    public function filters_can_be_loaded_from_partials()
     {
         /** @var Filter[] $filters */
         $filters = FakePartials::load('filters');
