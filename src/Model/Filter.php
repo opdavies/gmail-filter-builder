@@ -275,4 +275,22 @@ class Filter
     {
         return $this->properties;
     }
+
+    public function negate(Filter $filter): self
+    {
+        $filter->properties = collect($filter->toArray())
+            ->mapWithKeys(function ($conditions, $key) {
+                return [$key => collect($conditions)->map(function ($condition) {
+                    return $this->negateCondition($condition);
+                })];
+            })
+            ->toArray();
+
+        return $this;
+    }
+
+    private function negateCondition(string $condition): string
+    {
+        return "-($condition)";
+    }
 }

@@ -1,15 +1,17 @@
 <?php
 
-use Opdavies\GmailFilterBuilder\Filter;
+use Opdavies\GmailFilterBuilder\Model\Filter;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 return [
     Filter::create()
-        ->from('foo@example.com')
-        ->labelAndArchive('Example'),
+        ->from('papercall.io')
+        ->subject('New Submission For Drupal Camp Bristol 2019')
+        ->labelAndArchive('DrupalCamp Bristol'),
 
-    Filter::create()
-        ->from('bar@example.com')
-        ->important(),
+    ($filter = Filter::create())
+        ->from('papercall.io')
+        ->negate($filter->subject('New Submission For Drupal Camp Bristol 2019'))
+        ->labelAndArchive('Deletable/Other notifications'),
 ];

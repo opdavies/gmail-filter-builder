@@ -337,4 +337,20 @@ class FilterTest extends TestCase
                 ->toArray()
         );
     }
+
+    /** @test */
+    public function conditions_can_be_negated()
+    {
+        $this->filter
+            ->from('example.com')
+            ->negate($this->filter->subject('test'));
+
+        $this->assertEquals(
+            [
+                'from' => 'example.com',
+                'subject' => '-(test)',
+            ],
+            $this->filter->toArray()
+        );
+    }
 }
