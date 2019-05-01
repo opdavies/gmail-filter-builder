@@ -34,6 +34,33 @@ class GenerateFiltersTest extends TestCase
     }
 
     /** @test */
+    public function the_output_filename_matches_the_input_name()
+    {
+        $this->commandTester->execute([
+            '--input-file' => self::INPUT_FILENAME,
+        ]);
+
+        $this->assertTrue($this->fs->exists('input.xml'));
+
+        $this->fs->remove('input.xml');
+    }
+
+    /** @test */
+    public function the_output_filename_can_be_set_explicity()
+    {
+        $outputFilename = 'a-different-filename.xml';
+
+        $this->commandTester->execute([
+            '--input-file' => self::INPUT_FILENAME,
+            '--output-file' => $outputFilename,
+        ]);
+
+        $this->assertTrue($this->fs->exists($outputFilename));
+
+        $this->fs->remove($outputFilename);
+    }
+
+    /** @test */
     public function it_converts_filters_from_php_to_minified_xml()
     {
         $this->commandTester->execute([
