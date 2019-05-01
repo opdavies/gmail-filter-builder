@@ -4,6 +4,8 @@
 
 Released 2019-xx-xx:
 
+- No issue: remove `setDefinition()` and use `addOption()` in `GenerateCommand::configure()`
+
 ## 2.3.0
 
 Released 2019-05-01:
