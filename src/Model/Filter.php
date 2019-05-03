@@ -2,6 +2,8 @@
 
 namespace Opdavies\GmailFilterBuilder\Model;
 
+use Tightenco\Collect\Support\Collection;
+
 class Filter
 {
     /** @var string */
@@ -11,6 +13,13 @@ class Filter
      * @var array
      */
     private $properties = [];
+
+    private $conditions;
+
+    public function __construct()
+    {
+        $this->conditions = collect();
+    }
 
     /**
      * @return static
@@ -27,7 +36,7 @@ class Filter
      */
     public function has(string $value): self
     {
-        $this->properties['hasTheWord'] = $value;
+        $this->conditions->push(new FilterCondition('hasTheWord', $value));
 
         return $this;
     }
@@ -39,7 +48,7 @@ class Filter
      */
     public function hasNot(string $value): self
     {
-        $this->properties['doesNotHaveTheWord'] = $value;
+        $this->conditions->push(new FilterCondition('doesNotHaveTheWord', $value));
 
         return $this;
     }
@@ -51,11 +60,7 @@ class Filter
      */
     public function from($values): self
     {
-        if (!empty($values)) {
-            $this->properties['from'] = collect($values)->map(function ($value) {
-                return trim($value);
-            })->all();
-        }
+        $this->conditions->push(new FilterCondition('from', $values));
 
         return $this;
     }
@@ -67,11 +72,7 @@ class Filter
      */
     public function to($values): self
     {
-        if (!empty($values)) {
-            $this->properties['to'] = collect($values)->map(function ($value) {
-                return trim($value);
-            })->all();
-        }
+        $this->conditions->push(new FilterCondition('to', $values));
 
         return $this;
     }
@@ -83,9 +84,10 @@ class Filter
      */
     public function subject($values): self
     {
-        $this->properties['subject'] = collect($values)->map(function ($value) {
-            return json_encode($value);
-        })->implode('|');
+        $this->conditions->push(new FilterCondition(
+            'subject',
+            collect($values)->map('json_encode')
+        ));
 
         return $this;
     }
@@ -95,7 +97,7 @@ class Filter
      */
     public function hasAttachment(): self
     {
-        $this->properties['hasAttachment'] = 'true';
+        $this->conditions->push(new FilterCondition('hasAttachment', 'true'));
 
         return $this;
     }
@@ -109,7 +111,6 @@ class Filter
      */
     public function fromList($value): self
     {
-        $value = collect($value)->implode(self::SEPARATOR);
         $this->has("list:{$value}");
 
         return $this;
@@ -120,7 +121,7 @@ class Filter
      */
     public function excludeChats(): self
     {
-        $this->properties['excludeChats'] = 'true';
+        $this->conditions->push(new FilterCondition('excludeChats', 'true'));
 
         return $this;
     }
@@ -274,5 +275,10 @@ class Filter
     public function toArray(): array
     {
         return $this->properties;
+    }
+
+    public function getConditions(): Collection
+    {
+        return $this->conditions;
     }
 }

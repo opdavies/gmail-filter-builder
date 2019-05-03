@@ -3,6 +3,7 @@
 namespace Opdavies\Tests\GmailFilterBuilder\Model;
 
 use Opdavies\GmailFilterBuilder\Model\Filter;
+use Opdavies\GmailFilterBuilder\Model\FilterCondition;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,10 +32,13 @@ class FilterTest extends TestCase
      */
     public function can_filter_on_a_has_value()
     {
-        $this->assertEquals(
-            ['hasTheWord' => 'something'],
-            $this->filter->has('something')->toArray()
-        );
+        $filter = $this->filter->has('something');
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('hasTheWord', $condition->getProperty());
+        $this->assertSame('something', $condition->getValues()->first());
     }
 
     /**
@@ -43,80 +47,104 @@ class FilterTest extends TestCase
      */
     public function can_filter_on_a_has_not_value()
     {
-        $this->assertEquals(
-            ['doesNotHaveTheWord' => 'something'],
-            $this->filter->hasNot('something')->toArray()
-        );
+        $filter = $this->filter->hasNot('something else');
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('doesNotHaveTheWord', $condition->getProperty());
+        $this->assertSame('something else', $condition->getValues()->first());
     }
 
     /**
      * @test
      * @covers ::from
      */
-    public function can_filter_based_on_the_sender()
+    public function can_filter_based_on_a_single_sender()
     {
-        // Ensure that we can set one from address.
-        $this->assertEquals(
-            ['from' => ['foo@example.com']],
-            $this->filter->from('foo@example.com')->toArray()
-        );
+        $filter = $this->filter->from('foo@example.com');
 
-        // Ensure that we can set multiple from addresses.
-        $this->assertEquals(
-            ['from' => ['foo@example.com', 'bar@example.com']],
-            $this->filter->from(['foo@example.com', 'bar@example.com'])->toArray()
-        );
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('from', $condition->getProperty());
+        $this->assertSame('foo@example.com', $condition->getValues()->first());
     }
 
     /**
      * @test
      * @covers ::from
      */
-    public function no_from_property_exists_if_the_value_is_empty()
+    public function can_filter_based_on_multiple_senders()
     {
-        $this->assertArrayNotHasKey('from', $this->filter->from('')->toArray());
-        $this->assertArrayNotHasKey('from', $this->filter->from([])->toArray());
+        $addresses = ['foo@example.com', 'bar@example.com'];
+
+        $filter = $this->filter->from($addresses);
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('from', $condition->getProperty());
+        $this->assertSame($addresses, $condition->getValues()->toArray());
     }
 
     /**
      * @test
      * @covers ::to
      */
-    public function can_filter_based_on_the_recipient()
+    public function can_filter_based_on_a_single_recipient()
     {
-        $this->assertEquals(
-            ['to' => ['foo@example.com']],
-            $this->filter->to('foo@example.com')->toArray()
-        );
+        $filter = $this->filter->to('foo@example.com');
 
-        $this->assertEquals(
-            ['to' => ['bar@example.com', 'baz@example.com']],
-            $this->filter->to(['bar@example.com', 'baz@example.com'])->toArray()
-        );
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('to', $condition->getProperty());
+        $this->assertSame('foo@example.com', $condition->getValues()->first());
     }
 
-    /** @test */
-    public function no_to_property_exists_if_the_value_is_empty()
+    /**
+     * @test
+     * @covers ::from
+     */
+    public function can_filter_based_on_multiple_recipients()
     {
-        $this->assertArrayNotHasKey('to', $this->filter->to('')->toArray());
-        $this->assertArrayNotHasKey('to', $this->filter->to([])->toArray());
+        $addresses = ['foo@example.com', 'bar@example.com'];
+
+        $filter = $this->filter->to($addresses);
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('to', $condition->getProperty());
+        $this->assertSame($addresses, $condition->getValues()->toArray());
     }
 
     /**
      * @test
      * @covers ::subject
      */
-    public function can_filter_based_on_the_subject()
+    public function can_filter_based_on_a_single_subject()
     {
-        $this->assertEquals(
-            ['subject' => '"Something"'],
-            $this->filter->subject('Something')->toArray()
-        );
+        $filter = $this->filter->subject('foo@example.com');
 
-        $this->assertEquals(
-            ['subject' => '"Test"|"Foo bar"'],
-            $this->filter->subject(['Test', 'Foo bar'])->toArray()
-        );
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('subject', $condition->getProperty());
+        $this->assertSame('"foo@example.com"', $condition->getValues()->first());
+    }
+
+    /** @test */
+    public function can_filter_based_on_multiple_subjects()
+    {
+        $filter = $this->filter->subject(['foo', 'bar']);
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('subject', $condition->getProperty());
+        $this->assertSame(['"foo"', '"bar"'], $condition->getValues()->toArray());
     }
 
     /**
@@ -125,10 +153,13 @@ class FilterTest extends TestCase
      */
     public function can_filter_based_on_whether_there_is_an_attachment()
     {
-        $this->assertEquals(
-            ['hasAttachment' => 'true'],
-            $this->filter->hasAttachment()->toArray()
-        );
+        $filter = $this->filter->hasAttachment();
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('hasAttachment', $condition->getProperty());
+        $this->assertSame('true', $condition->getValues()->first());
     }
 
     /**
@@ -137,15 +168,13 @@ class FilterTest extends TestCase
      */
     public function can_filter_based_on_wether_it_was_sent_to_a_list()
     {
-        $this->assertEquals(
-            ['hasTheWord' => 'list:foobar'],
-            $this->filter->fromList('foobar')->toArray()
-        );
+        $filter = $this->filter->fromList('php-weekly');
 
-        $this->assertEquals(
-            ['hasTheWord' => 'list:list-one.com|list-two.com'],
-            $this->filter->fromList(['list-one.com', 'list-two.com'])->toArray()
-        );
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('hasTheWord', $condition->getProperty());
+        $this->assertSame('list:php-weekly', $condition->getValues()->first());
     }
 
     /**
@@ -154,10 +183,13 @@ class FilterTest extends TestCase
      */
     public function chats_can_be_excluded()
     {
-        $this->assertEquals(
-            ['excludeChats' => 'true'],
-            $this->filter->excludeChats()->toArray()
-        );
+        $filter = $this->filter->excludeChats();
+
+        $condition = $filter->getConditions()->first();
+
+        $this->assertInstanceOf(FilterCondition::class, $condition);
+        $this->assertSame('excludeChats', $condition->getProperty());
+        $this->assertSame('true', $condition->getValues()->first());
     }
 
     /**
