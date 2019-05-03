@@ -16,9 +16,13 @@ class PartialsTest extends TestCase
 
         $this->assertCount(3, $filters);
 
-        $this->assertSame('foo@example.com', $filters[0]->toArray()['from'][0]);
-        $this->assertSame('bar@example.com', $filters[1]->toArray()['from'][0]);
-        $this->assertSame('baz@example.com', $filters[2]->toArray()['from'][0]);
+        $toAddresses = collect($filters)
+            ->flatMap->getConditions()->map->getValues()
+            ->flatten();
+
+        $this->assertSame('foo@example.com', $toAddresses[0]);
+        $this->assertSame('bar@example.com', $toAddresses[1]);
+        $this->assertSame('baz@example.com', $toAddresses[2]);
     }
 }
 
