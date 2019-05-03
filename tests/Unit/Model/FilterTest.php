@@ -358,7 +358,7 @@ class FilterTest extends TestCase
                 'shouldStar' => 'true',
                 'shouldAlwaysMarkAsImportant' => 'true',
             ],
-            $this->filter->from(['foo@example.com ', 'bar@example.com'])
+            $this->filter->from(['foo@example.com', 'bar@example.com'])
                 ->has('Something')
                 ->excludeChats()
                 ->labelAndArchive('Foo')

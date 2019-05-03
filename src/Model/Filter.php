@@ -274,7 +274,17 @@ class Filter
      */
     public function toArray(): array
     {
-        return $this->properties;
+        return collect($this->properties)->merge(
+            $this->conditions->flatten(1)->mapWithKeys(function (FilterCondition $condition) {
+                $values = $condition->getValues();
+
+                return [
+                    $condition->getProperty() => $values->count() == 1
+                        ? $values->first()
+                        : $values
+                ];
+            })
+        )->toArray();
     }
 
     public function getConditions(): Collection
