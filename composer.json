@@ -44,6 +44,6 @@
     },
     "scripts": {
         "lint": "php-cs-fixer fix",
-        "test": "phpunit"
+        "test": "phpunit && composer lint -- --dry-run"
     }
 }
