@@ -10,7 +10,8 @@ use Symfony\Component\Filesystem\Filesystem;
 class GenerateFiltersTest extends TestCase
 {
     const INPUT_FILENAME = __DIR__ . '/../../../fixtures/simple/input.php';
-    const OUTPUT_FILENAME = 'test-output.xml';
+    const OUTPUT_FILENAME = 'output.xml';
+    const TEST_OUTPUT_DIR = 'test';
 
     /** @var CommandTester */
     private $commandTester;
@@ -24,13 +25,17 @@ class GenerateFiltersTest extends TestCase
 
         $this->commandTester = new CommandTester(new GenerateCommand());
         $this->fs = new Filesystem();
+
+        if (!$this->fs->exists(self::TEST_OUTPUT_DIR)) {
+            $this->fs->mkdir(self::TEST_OUTPUT_DIR);
+        }
+        chdir(self::TEST_OUTPUT_DIR);
     }
 
     protected function tearDown()
     {
-        // Ensure that files generated during tests are removed to prevent
-        // failures on future runs.
-        $this->fs->remove([self::OUTPUT_FILENAME]);
+        chdir('..');
+        $this->fs->remove(self::TEST_OUTPUT_DIR);
     }
 
     /** @test */
@@ -42,7 +47,6 @@ class GenerateFiltersTest extends TestCase
 
         $this->assertTrue($this->fs->exists('input.xml'));
 
-        $this->fs->remove('input.xml');
     }
 
     /** @test */
@@ -57,7 +61,6 @@ class GenerateFiltersTest extends TestCase
 
         $this->assertTrue($this->fs->exists($outputFilename));
 
-        $this->fs->remove($outputFilename);
     }
 
     /** @test */
