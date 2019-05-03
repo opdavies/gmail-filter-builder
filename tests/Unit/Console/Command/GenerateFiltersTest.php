@@ -46,7 +46,6 @@ class GenerateFiltersTest extends TestCase
         ]);
 
         $this->assertTrue($this->fs->exists('input.xml'));
-
     }
 
     /** @test */
@@ -60,7 +59,6 @@ class GenerateFiltersTest extends TestCase
         ]);
 
         $this->assertTrue($this->fs->exists($outputFilename));
-
     }
 
     /** @test */
