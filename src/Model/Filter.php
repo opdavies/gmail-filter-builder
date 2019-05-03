@@ -232,7 +232,7 @@ class Filter
             $values = $property->getValues();
 
             return [
-                $property->getProperty() => $values->count() == 1
+                $property->getPropertyName() => $values->count() == 1
                     ? $values->first()
                     : $values
             ];

@@ -38,7 +38,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('hasTheWord', $condition->getProperty());
+        $this->assertSame('hasTheWord', $condition->getPropertyName());
         $this->assertSame('something', $condition->getValues()->first());
     }
 
@@ -53,7 +53,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('doesNotHaveTheWord', $condition->getProperty());
+        $this->assertSame('doesNotHaveTheWord', $condition->getPropertyName());
         $this->assertSame('something else', $condition->getValues()->first());
     }
 
@@ -68,7 +68,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('from', $condition->getProperty());
+        $this->assertSame('from', $condition->getPropertyName());
         $this->assertSame('foo@example.com', $condition->getValues()->first());
     }
 
@@ -85,7 +85,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('from', $condition->getProperty());
+        $this->assertSame('from', $condition->getPropertyName());
         $this->assertSame($addresses, $condition->getValues()->toArray());
     }
 
@@ -100,7 +100,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('to', $condition->getProperty());
+        $this->assertSame('to', $condition->getPropertyName());
         $this->assertSame('foo@example.com', $condition->getValues()->first());
     }
 
@@ -117,7 +117,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('to', $condition->getProperty());
+        $this->assertSame('to', $condition->getPropertyName());
         $this->assertSame($addresses, $condition->getValues()->toArray());
     }
 
@@ -132,7 +132,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('subject', $condition->getProperty());
+        $this->assertSame('subject', $condition->getPropertyName());
         $this->assertSame('"foo@example.com"', $condition->getValues()->first());
     }
 
@@ -144,7 +144,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('subject', $condition->getProperty());
+        $this->assertSame('subject', $condition->getPropertyName());
         $this->assertSame(['"foo"', '"bar"'], $condition->getValues()->toArray());
     }
 
@@ -159,7 +159,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('hasAttachment', $condition->getProperty());
+        $this->assertSame('hasAttachment', $condition->getPropertyName());
         $this->assertSame('true', $condition->getValues()->first());
     }
 
@@ -174,7 +174,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('hasTheWord', $condition->getProperty());
+        $this->assertSame('hasTheWord', $condition->getPropertyName());
         $this->assertSame('list:php-weekly', $condition->getValues()->first());
     }
 
@@ -189,7 +189,7 @@ class FilterTest extends TestCase
         $condition = $filter->getConditions()->first();
 
         $this->assertInstanceOf(FilterCondition::class, $condition);
-        $this->assertSame('excludeChats', $condition->getProperty());
+        $this->assertSame('excludeChats', $condition->getPropertyName());
         $this->assertSame('true', $condition->getValues()->first());
     }
 
@@ -205,7 +205,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('label', $action->getProperty());
+        $this->assertSame('label', $action->getPropertyName());
         $this->assertSame('Foo', $action->getValues()->first());
     }
 
@@ -221,7 +221,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('shouldArchive', $action->getProperty());
+        $this->assertSame('shouldArchive', $action->getPropertyName());
         $this->assertSame('true', $action->getvalues()->first());
     }
 
@@ -237,12 +237,12 @@ class FilterTest extends TestCase
         $this->assertCount(2, $actions);
 
         tap($actions->first(), function (FilterAction $action) {
-            $this->assertSame('label', $action->getProperty());
+            $this->assertSame('label', $action->getPropertyName());
             $this->assertSame('test', $action->getValues()->first());
         });
 
         tap($actions->last(), function (FilterAction $action) {
-            $this->assertSame('shouldArchive', $action->getProperty());
+            $this->assertSame('shouldArchive', $action->getPropertyName());
             $this->assertSame('true', $action->getValues()->first());
         });
     }
@@ -259,12 +259,12 @@ class FilterTest extends TestCase
         $this->assertCount(2, $actions);
 
         tap($actions->first(), function (FilterAction $action) {
-            $this->assertSame('shouldSpam', $action->getProperty());
+            $this->assertSame('shouldSpam', $action->getPropertyName());
             $this->assertSame('true', $action->getValues()->first());
         });
 
         tap($actions->last(), function (FilterAction $action) {
-            $this->assertSame('shouldNeverSpam', $action->getProperty());
+            $this->assertSame('shouldNeverSpam', $action->getPropertyName());
             $this->assertSame('false', $action->getValues()->first());
         });
     }
@@ -281,12 +281,12 @@ class FilterTest extends TestCase
         $this->assertCount(2, $actions);
 
         tap($actions->first(), function (FilterAction $action) {
-            $this->assertSame('shouldSpam', $action->getProperty());
+            $this->assertSame('shouldSpam', $action->getPropertyName());
             $this->assertSame('false', $action->getValues()->first());
         });
 
         tap($actions->last(), function (FilterAction $action) {
-            $this->assertSame('shouldNeverSpam', $action->getProperty());
+            $this->assertSame('shouldNeverSpam', $action->getPropertyName());
             $this->assertSame('true', $action->getValues()->first());
         });
     }
@@ -302,7 +302,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('shouldTrash', $action->getProperty());
+        $this->assertSame('shouldTrash', $action->getPropertyName());
         $this->assertSame('true', $action->getValues()->first());
     }
 
@@ -317,7 +317,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('markAsRead', $action->getProperty());
+        $this->assertSame('markAsRead', $action->getPropertyName());
         $this->assertSame('true', $action->getValues()->first());
     }
 
@@ -332,7 +332,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('shouldStar', $action->getProperty());
+        $this->assertSame('shouldStar', $action->getPropertyName());
         $this->assertSame('true', $action->getValues()->first());
     }
 
@@ -347,7 +347,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('forwardTo', $action->getProperty());
+        $this->assertSame('forwardTo', $action->getPropertyName());
         $this->assertSame('foo@example.com', $action->getValues()->first());
     }
 
@@ -362,7 +362,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('shouldAlwaysMarkAsImportant', $action->getProperty());
+        $this->assertSame('shouldAlwaysMarkAsImportant', $action->getPropertyName());
         $this->assertSame('true', $action->getValues()->first());
     }
 
@@ -377,7 +377,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('shouldNeverMarkAsImportant', $action->getProperty());
+        $this->assertSame('shouldNeverMarkAsImportant', $action->getPropertyName());
         $this->assertSame('true', $action->getValues()->first());
     }
 
@@ -392,7 +392,7 @@ class FilterTest extends TestCase
         $action = $filter->getActions()->first();
 
         $this->assertInstanceOf(FilterAction::class, $action);
-        $this->assertSame('smartLabelToApply', $action->getProperty());
+        $this->assertSame('smartLabelToApply', $action->getPropertyName());
         $this->assertSame('Foo', $action->getValues()->first());
     }
 

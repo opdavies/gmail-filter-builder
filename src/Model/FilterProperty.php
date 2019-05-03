@@ -18,7 +18,7 @@ abstract class FilterProperty
         $this->values = collect($values);
     }
 
-    public function getProperty(): string
+    public function getPropertyName(): string
     {
         return $this->property;
     }
