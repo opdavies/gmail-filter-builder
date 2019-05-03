@@ -41,4 +41,15 @@ EOF;
 
         $this->assertEquals($expected, $result->getXml());
     }
+
+    /** @test */
+    public function label_values_are_prefixed()
+    {
+        $this->fail();
+    }
+    /** @test */
+    public function multiple_labels_are_imploded()
+    {
+        $this->fail();
+    }
 }
