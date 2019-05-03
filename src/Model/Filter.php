@@ -33,9 +33,7 @@ class Filter
      */
     public function has(string $value): self
     {
-        $this->conditions->push(new FilterCondition('hasTheWord', $value));
-
-        return $this;
+        return $this->addCondition('hasTheWord', $value);
     }
 
     /**
@@ -45,9 +43,7 @@ class Filter
      */
     public function hasNot(string $value): self
     {
-        $this->conditions->push(new FilterCondition('doesNotHaveTheWord', $value));
-
-        return $this;
+        return $this->addCondition('doesNotHaveTheWord', $value);
     }
 
     /**
@@ -57,9 +53,7 @@ class Filter
      */
     public function from($values): self
     {
-        $this->conditions->push(new FilterCondition('from', $values));
-
-        return $this;
+        return $this->addCondition('from', $values);
     }
 
     /**
@@ -69,9 +63,7 @@ class Filter
      */
     public function to($values): self
     {
-        $this->conditions->push(new FilterCondition('to', $values));
-
-        return $this;
+        return $this->addCondition('to', $values);
     }
 
     /**
@@ -81,12 +73,7 @@ class Filter
      */
     public function subject($values): self
     {
-        $this->conditions->push(new FilterCondition(
-            'subject',
-            collect($values)->map('json_encode')
-        ));
-
-        return $this;
+        return $this->addCondition('subject', collect($values)->map('json_encode'));
     }
 
     /**
@@ -94,9 +81,7 @@ class Filter
      */
     public function hasAttachment(): self
     {
-        $this->conditions->push(new FilterCondition('hasAttachment', 'true'));
-
-        return $this;
+        return $this->addCondition('hasAttachment', 'true');
     }
 
     /**
@@ -108,9 +93,7 @@ class Filter
      */
     public function fromList($value): self
     {
-        $this->has("list:{$value}");
-
-        return $this;
+        return $this->has("list:{$value}");
     }
 
     /**
@@ -118,9 +101,7 @@ class Filter
      */
     public function excludeChats(): self
     {
-        $this->conditions->push(new FilterCondition('excludeChats', 'true'));
-
-        return $this;
+        return $this->addCondition('excludeChats', 'true');
     }
 
     /**
@@ -130,9 +111,7 @@ class Filter
      */
     public function label(string $label): self
     {
-        $this->actions->push(new FilterAction('label', $label));
-
-        return $this;
+        return $this->addAction('label', $label);
     }
 
     /**
@@ -140,9 +119,7 @@ class Filter
      */
     public function archive(): self
     {
-        $this->actions->push(new FilterAction('shouldArchive', 'true'));
-
-        return $this;
+        return $this->addAction('shouldArchive', 'true');
     }
 
     /**
@@ -152,9 +129,7 @@ class Filter
      */
     public function labelAndArchive(string $label): self
     {
-        $this->label($label)->archive();
-
-        return $this;
+        return $this->label($label)->archive();
     }
 
     /**
@@ -162,10 +137,8 @@ class Filter
      */
     public function spam(): self
     {
-        $this->actions->push(new FilterAction('shouldSpam', 'true'));
-        $this->actions->push(new FilterAction('shouldNeverSpam', 'false'));
-
-        return $this;
+        return $this->addAction('shouldSpam', 'true')
+            ->addAction('shouldNeverSpam', 'false');
     }
 
     /**
@@ -173,10 +146,8 @@ class Filter
      */
     public function neverSpam(): self
     {
-        $this->actions->push(new FilterAction('shouldSpam', 'false'));
-        $this->actions->push(new FilterAction('shouldNeverSpam', 'true'));
-
-        return $this;
+        return $this->addAction('shouldSpam', 'false')
+            ->addAction('shouldNeverSpam', 'true');
     }
 
     /**
@@ -184,9 +155,7 @@ class Filter
      */
     public function trash(): self
     {
-        $this->actions->push(new FilterAction('shouldTrash', 'true'));
-
-        return $this;
+        return $this->addAction('shouldTrash', 'true');
     }
 
     /**
@@ -194,9 +163,7 @@ class Filter
      */
     public function read(): self
     {
-        $this->actions->push(new FilterAction('markAsRead', 'true'));
-
-        return $this;
+        return $this->addAction('markAsRead', 'true');
     }
 
     /**
@@ -204,9 +171,7 @@ class Filter
      */
     public function star(): self
     {
-        $this->actions->push(new FilterAction('shouldStar', 'true'));
-
-        return $this;
+        return $this->addAction('shouldStar', 'true');
     }
 
     /**
@@ -216,9 +181,7 @@ class Filter
      */
     public function forward(string $to): self
     {
-        $this->actions->push(new FilterAction('forwardTo', $to));
-
-        return $this;
+        return $this->addAction('forwardTo', $to);
     }
 
     /**
@@ -226,9 +189,7 @@ class Filter
      */
     public function important(): self
     {
-        $this->actions->push(new FilterAction('shouldAlwaysMarkAsImportant', 'true'));
-
-        return $this;
+        return $this->addAction('shouldAlwaysMarkAsImportant', 'true');
     }
 
     /**
@@ -236,9 +197,7 @@ class Filter
      */
     public function notImportant(): self
     {
-        $this->actions->push(new FilterAction('shouldNeverMarkAsImportant', 'true'));
-
-        return $this;
+        return $this->addAction('shouldNeverMarkAsImportant', 'true');
     }
 
     /**
@@ -248,9 +207,7 @@ class Filter
      */
     public function categorise(string $category): self
     {
-        $this->actions->push(new FilterAction('smartLabelToApply', $category));
-
-        return $this;
+        return $this->addAction('smartLabelToApply', $category);
     }
 
     /**
@@ -290,5 +247,19 @@ class Filter
     public function getActions(): Collection
     {
         return $this->actions;
+    }
+
+    private function addCondition(string $name, $value): self
+    {
+        $this->conditions->push(new FilterCondition($name, $value));
+
+        return $this;
+    }
+
+    private function addAction(string $property, $value): self
+    {
+        $this->actions->push(new FilterAction($property, $value));
+
+        return $this;
     }
 }
