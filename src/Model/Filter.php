@@ -14,11 +14,16 @@ class Filter
      */
     private $properties = [];
 
+    /** @var Collection */
     private $conditions;
+
+    /** @var Collection */
+    private $actions;
 
     public function __construct()
     {
         $this->conditions = collect();
+        $this->actions = collect();
     }
 
     /**
@@ -133,7 +138,7 @@ class Filter
      */
     public function label(string $label): self
     {
-        $this->properties['label'] = $label;
+        $this->actions->push(new FilterAction('label', $label));
 
         return $this;
     }
@@ -143,7 +148,7 @@ class Filter
      */
     public function archive(): self
     {
-        $this->properties['shouldArchive'] = 'true';
+        $this->actions->push(new FilterAction('shouldArchive', 'true'));
 
         return $this;
     }
@@ -165,8 +170,8 @@ class Filter
      */
     public function spam(): self
     {
-        $this->properties['shouldSpam'] = 'true';
-        $this->properties['shouldNeverSpam'] = 'false';
+        $this->actions->push(new FilterAction('shouldSpam', 'true'));
+        $this->actions->push(new FilterAction('shouldNeverSpam', 'false'));
 
         return $this;
     }
@@ -176,8 +181,8 @@ class Filter
      */
     public function neverSpam(): self
     {
-        $this->properties['shouldSpam'] = 'false';
-        $this->properties['shouldNeverSpam'] = 'true';
+        $this->actions->push(new FilterAction('shouldSpam', 'false'));
+        $this->actions->push(new FilterAction('shouldNeverSpam', 'true'));
 
         return $this;
     }
@@ -187,7 +192,7 @@ class Filter
      */
     public function trash(): self
     {
-        $this->properties['shouldTrash'] = 'true';
+        $this->actions->push(new FilterAction('shouldTrash', 'true'));
 
         return $this;
     }
@@ -197,7 +202,7 @@ class Filter
      */
     public function read(): self
     {
-        $this->properties['markAsRead'] = 'true';
+        $this->actions->push(new FilterAction('markAsRead', 'true'));
 
         return $this;
     }
@@ -207,7 +212,7 @@ class Filter
      */
     public function star(): self
     {
-        $this->properties['shouldStar'] = 'true';
+        $this->actions->push(new FilterAction('shouldStar', 'true'));
 
         return $this;
     }
@@ -219,7 +224,7 @@ class Filter
      */
     public function forward(string $to): self
     {
-        $this->properties['forwardTo'] = $to;
+        $this->actions->push(new FilterAction('forwardTo', $to));
 
         return $this;
     }
@@ -229,7 +234,7 @@ class Filter
      */
     public function important(): self
     {
-        $this->properties['shouldAlwaysMarkAsImportant'] = 'true';
+        $this->actions->push(new FilterAction('shouldAlwaysMarkAsImportant', 'true'));
 
         return $this;
     }
@@ -239,7 +244,7 @@ class Filter
      */
     public function notImportant(): self
     {
-        $this->properties['shouldNeverMarkAsImportant'] = 'true';
+        $this->actions->push(new FilterAction('shouldNeverMarkAsImportant', 'true'));
 
         return $this;
     }
@@ -251,7 +256,7 @@ class Filter
      */
     public function categorise(string $category): self
     {
-        $this->properties['smartLabelToApply'] = $category;
+        $this->actions->push(new FilterAction('smartLabelToApply', $category));
 
         return $this;
     }
@@ -274,21 +279,24 @@ class Filter
      */
     public function toArray(): array
     {
-        return collect($this->properties)->merge(
-            $this->conditions->flatten(1)->mapWithKeys(function (FilterCondition $condition) {
-                $values = $condition->getValues();
+        return $this->conditions->merge($this->actions)->mapWithKeys(function (FilterProperty $property) {
+            $values = $property->getValues();
 
-                return [
-                    $condition->getProperty() => $values->count() == 1
-                        ? $values->first()
-                        : $values
-                ];
-            })
-        )->toArray();
+            return [
+                $property->getProperty() => $values->count() == 1
+                    ? $values->first()
+                    : $values
+            ];
+        })->toArray();
     }
 
     public function getConditions(): Collection
     {
         return $this->conditions;
+    }
+
+    public function getActions(): Collection
+    {
+        return $this->actions;
     }
 }

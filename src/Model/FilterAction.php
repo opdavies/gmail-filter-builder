@@ -2,6 +2,6 @@
 
 namespace Opdavies\GmailFilterBuilder\Model;
 
-class FilterCondition extends FilterProperty
+class FilterAction extends FilterProperty
 {
 }

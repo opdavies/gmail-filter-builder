@@ -3,6 +3,7 @@
 namespace Opdavies\Tests\GmailFilterBuilder\Model;
 
 use Opdavies\GmailFilterBuilder\Model\Filter;
+use Opdavies\GmailFilterBuilder\Model\FilterAction;
 use Opdavies\GmailFilterBuilder\Model\FilterCondition;
 use PHPUnit\Framework\TestCase;
 
@@ -198,10 +199,14 @@ class FilterTest extends TestCase
      */
     public function labels_can_be_added()
     {
-        $this->assertEquals(
-            ['label' => 'Foo'],
-            $this->filter->label('Foo')->toArray()
-        );
+        $filter = $this->filter->label('Foo');
+
+        /** @var FilterAction $action */
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('label', $action->getProperty());
+        $this->assertSame('Foo', $action->getValues()->first());
     }
 
     /**
@@ -210,10 +215,14 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_archived()
     {
-        $this->assertEquals(
-            ['shouldArchive' => 'true'],
-            $this->filter->archive()->toArray()
-        );
+        $filter = $this->filter->archive();
+
+        /** @var FilterAction $action */
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('shouldArchive', $action->getProperty());
+        $this->assertSame('true', $action->getvalues()->first());
     }
 
     /**
@@ -222,10 +231,20 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_labelled_and_archived()
     {
-        $this->assertEquals(
-            ['shouldArchive' => 'true', 'label' => 'Foo'],
-            $this->filter->labelAndArchive('Foo')->toArray()
-        );
+        $filter = $this->filter->labelAndArchive('test');
+
+        $actions = $filter->getActions();
+        $this->assertCount(2, $actions);
+
+        tap($actions->first(), function (FilterAction $action) {
+            $this->assertSame('label', $action->getProperty());
+            $this->assertSame('test', $action->getValues()->first());
+        });
+
+        tap($actions->last(), function (FilterAction $action) {
+            $this->assertSame('shouldArchive', $action->getProperty());
+            $this->assertSame('true', $action->getValues()->first());
+        });
     }
 
     /**
@@ -234,13 +253,20 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_marked_as_spam()
     {
-        $this->assertEquals(
-            [
-                'shouldSpam' => 'true',
-                'shouldNeverSpam' => 'false'
-            ],
-            $this->filter->spam()->toArray()
-        );
+        $filter = $this->filter->spam();
+
+        $actions = $filter->getActions();
+        $this->assertCount(2, $actions);
+
+        tap($actions->first(), function (FilterAction $action) {
+            $this->assertSame('shouldSpam', $action->getProperty());
+            $this->assertSame('true', $action->getValues()->first());
+        });
+
+        tap($actions->last(), function (FilterAction $action) {
+            $this->assertSame('shouldNeverSpam', $action->getProperty());
+            $this->assertSame('false', $action->getValues()->first());
+        });
     }
 
     /**
@@ -249,13 +275,20 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_marked_as_not_spam()
     {
-        $this->assertEquals(
-            [
-                'shouldSpam' => 'false',
-                'shouldNeverSpam' => 'true'
-            ],
-            $this->filter->neverSpam()->toArray()
-        );
+        $filter = $this->filter->neverSpam();
+
+        $actions = $filter->getActions();
+        $this->assertCount(2, $actions);
+
+        tap($actions->first(), function (FilterAction $action) {
+            $this->assertSame('shouldSpam', $action->getProperty());
+            $this->assertSame('false', $action->getValues()->first());
+        });
+
+        tap($actions->last(), function (FilterAction $action) {
+            $this->assertSame('shouldNeverSpam', $action->getProperty());
+            $this->assertSame('true', $action->getValues()->first());
+        });
     }
 
     /**
@@ -264,10 +297,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_deleted()
     {
-        $this->assertEquals(
-            ['shouldTrash' => 'true'],
-            $this->filter->trash()->toArray()
-        );
+        $filter = $this->filter->trash();
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('shouldTrash', $action->getProperty());
+        $this->assertSame('true', $action->getValues()->first());
     }
 
     /**
@@ -276,10 +312,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_marked_as_read()
     {
-        $this->assertEquals(
-            ['markAsRead' => 'true'],
-            $this->filter->read()->toArray()
-        );
+        $filter = $this->filter->read();
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('markAsRead', $action->getProperty());
+        $this->assertSame('true', $action->getValues()->first());
     }
 
     /**
@@ -288,10 +327,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_starred()
     {
-        $this->assertEquals(
-            ['shouldStar' => 'true'],
-            $this->filter->star()->toArray()
-        );
+        $filter = $this->filter->star();
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('shouldStar', $action->getProperty());
+        $this->assertSame('true', $action->getValues()->first());
     }
 
     /**
@@ -300,10 +342,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_forwarded()
     {
-        $this->assertEquals(
-            ['forwardTo' => 'foo@example.com'],
-            $this->filter->forward('foo@example.com')->toArray()
-        );
+        $filter = $this->filter->forward('foo@example.com');
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('forwardTo', $action->getProperty());
+        $this->assertSame('foo@example.com', $action->getValues()->first());
     }
 
     /**
@@ -312,10 +357,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_marked_as_important()
     {
-        $this->assertEquals(
-            ['shouldAlwaysMarkAsImportant' => 'true'],
-            $this->filter->important()->toArray()
-        );
+        $filter = $this->filter->important();
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('shouldAlwaysMarkAsImportant', $action->getProperty());
+        $this->assertSame('true', $action->getValues()->first());
     }
 
     /**
@@ -324,10 +372,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_marked_as_not_important()
     {
-        $this->assertEquals(
-            ['shouldNeverMarkAsImportant' => 'true'],
-            $this->filter->notImportant()->toArray()
-        );
+        $filter = $this->filter->notImportant();
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('shouldNeverMarkAsImportant', $action->getProperty());
+        $this->assertSame('true', $action->getValues()->first());
     }
 
     /**
@@ -336,10 +387,13 @@ class FilterTest extends TestCase
      */
     public function messages_can_be_categorised()
     {
-        $this->assertEquals(
-            ['smartLabelToApply' => 'Foo'],
-            $this->filter->categorise('Foo')->toArray()
-        );
+        $filter = $this->filter->categorise('Foo');
+
+        $action = $filter->getActions()->first();
+
+        $this->assertInstanceOf(FilterAction::class, $action);
+        $this->assertSame('smartLabelToApply', $action->getProperty());
+        $this->assertSame('Foo', $action->getValues()->first());
     }
 
     /** @test */
