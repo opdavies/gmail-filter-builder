@@ -6,14 +6,6 @@ use Tightenco\Collect\Support\Collection;
 
 class Filter
 {
-    /** @var string */
-    const SEPARATOR = '|';
-
-    /**
-     * @var array
-     */
-    private $properties = [];
-
     /** @var Collection */
     private $conditions;
 
