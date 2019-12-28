@@ -33,7 +33,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['hasTheWord' => 'something'],
-            $this->filter->has('something')->toArray()
+            $this->filter->has('something')->getConditions()
         );
     }
 
@@ -45,7 +45,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['doesNotHaveTheWord' => 'something'],
-            $this->filter->hasNot('something')->toArray()
+            $this->filter->hasNot('something')->getConditions()
         );
     }
 
@@ -58,13 +58,13 @@ class FilterTest extends TestCase
         // Ensure that we can set one from address.
         $this->assertEquals(
             ['from' => ['foo@example.com']],
-            $this->filter->from('foo@example.com')->toArray()
+            $this->filter->from('foo@example.com')->getConditions()
         );
 
         // Ensure that we can set multiple from addresses.
         $this->assertEquals(
             ['from' => ['foo@example.com', 'bar@example.com']],
-            $this->filter->from(['foo@example.com', 'bar@example.com'])->toArray()
+            $this->filter->from(['foo@example.com', 'bar@example.com'])->getConditions()
         );
     }
 
@@ -74,8 +74,8 @@ class FilterTest extends TestCase
      */
     public function no_from_property_exists_if_the_value_is_empty()
     {
-        $this->assertArrayNotHasKey('from', $this->filter->from('')->toArray());
-        $this->assertArrayNotHasKey('from', $this->filter->from([])->toArray());
+        $this->assertArrayNotHasKey('from', $this->filter->from('')->getConditions());
+        $this->assertArrayNotHasKey('from', $this->filter->from([])->getConditions());
     }
 
     /**
@@ -86,12 +86,12 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['to' => ['foo@example.com']],
-            $this->filter->to('foo@example.com')->toArray()
+            $this->filter->to('foo@example.com')->getConditions()
         );
 
         $this->assertEquals(
             ['to' => ['bar@example.com', 'baz@example.com']],
-            $this->filter->to(['bar@example.com', 'baz@example.com'])->toArray()
+            $this->filter->to(['bar@example.com', 'baz@example.com'])->getConditions()
         );
     }
 
@@ -110,12 +110,12 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['subject' => '"Something"'],
-            $this->filter->subject('Something')->toArray()
+            $this->filter->subject('Something')->getConditions()
         );
 
         $this->assertEquals(
             ['subject' => '"Test"|"Foo bar"'],
-            $this->filter->subject(['Test', 'Foo bar'])->toArray()
+            $this->filter->subject(['Test', 'Foo bar'])->getConditions()
         );
     }
 
@@ -127,7 +127,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['hasAttachment' => 'true'],
-            $this->filter->hasAttachment()->toArray()
+            $this->filter->hasAttachment()->getConditions()
         );
     }
 
@@ -139,12 +139,12 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['hasTheWord' => 'list:foobar'],
-            $this->filter->fromList('foobar')->toArray()
+            $this->filter->fromList('foobar')->getConditions()
         );
 
         $this->assertEquals(
             ['hasTheWord' => 'list:list-one.com|list-two.com'],
-            $this->filter->fromList(['list-one.com', 'list-two.com'])->toArray()
+            $this->filter->fromList(['list-one.com', 'list-two.com'])->getConditions()
         );
     }
 
@@ -156,7 +156,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['excludeChats' => 'true'],
-            $this->filter->excludeChats()->toArray()
+            $this->filter->excludeChats()->getConditions()
         );
     }
 
@@ -168,7 +168,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['label' => 'Foo'],
-            $this->filter->label('Foo')->toArray()
+            $this->filter->label('Foo')->getActions()
         );
     }
 
@@ -180,7 +180,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldArchive' => 'true'],
-            $this->filter->archive()->toArray()
+            $this->filter->archive()->getActions()
         );
     }
 
@@ -192,7 +192,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldArchive' => 'true', 'label' => 'Foo'],
-            $this->filter->labelAndArchive('Foo')->toArray()
+            $this->filter->labelAndArchive('Foo')->getActions()
         );
     }
 
@@ -207,7 +207,7 @@ class FilterTest extends TestCase
                 'shouldSpam' => 'true',
                 'shouldNeverSpam' => 'false'
             ],
-            $this->filter->spam()->toArray()
+            $this->filter->spam()->getActions()
         );
     }
 
@@ -222,7 +222,7 @@ class FilterTest extends TestCase
                 'shouldSpam' => 'false',
                 'shouldNeverSpam' => 'true'
             ],
-            $this->filter->neverSpam()->toArray()
+            $this->filter->neverSpam()->getActions()
         );
     }
 
@@ -234,7 +234,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldTrash' => 'true'],
-            $this->filter->trash()->toArray()
+            $this->filter->trash()->getActions()
         );
     }
 
@@ -246,7 +246,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['markAsRead' => 'true'],
-            $this->filter->read()->toArray()
+            $this->filter->read()->getActions()
         );
     }
 
@@ -258,7 +258,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldStar' => 'true'],
-            $this->filter->star()->toArray()
+            $this->filter->star()->getActions()
         );
     }
 
@@ -270,7 +270,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['forwardTo' => 'foo@example.com'],
-            $this->filter->forward('foo@example.com')->toArray()
+            $this->filter->forward('foo@example.com')->getActions()
         );
     }
 
@@ -282,7 +282,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldAlwaysMarkAsImportant' => 'true'],
-            $this->filter->important()->toArray()
+            $this->filter->important()->getActions()
         );
     }
 
@@ -294,7 +294,7 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['shouldNeverMarkAsImportant' => 'true'],
-            $this->filter->notImportant()->toArray()
+            $this->filter->notImportant()->getActions()
         );
     }
 
@@ -306,35 +306,37 @@ class FilterTest extends TestCase
     {
         $this->assertEquals(
             ['smartLabelToApply' => 'Foo'],
-            $this->filter->categorise('Foo')->toArray()
+            $this->filter->categorise('Foo')->getActions()
         );
     }
 
     /** @test */
     public function methods_can_be_chained()
     {
-        $this->assertEquals(
-            [
-                'from' => ['foo@example.com', 'bar@example.com'],
-                'hasTheWord' => 'Something',
-                'excludeChats' => 'true',
-                'label' => 'Foo',
-                'markAsRead' => 'true',
-                'shouldArchive' => 'true',
-                'shouldNeverSpam' => 'true',
-                'shouldSpam' => 'false',
-                'shouldStar' => 'true',
-                'shouldAlwaysMarkAsImportant' => 'true',
-            ],
-            $this->filter->from(['foo@example.com ', 'bar@example.com'])
-                ->has('Something')
-                ->excludeChats()
-                ->labelAndArchive('Foo')
-                ->read()
-                ->important()
-                ->neverSpam()
-                ->star()
-                ->toArray()
-        );
+        $filter = $this->filter
+            ->from(['foo@example.com ', 'bar@example.com'])
+            ->has('Something')
+            ->excludeChats()
+            ->labelAndArchive('Foo')
+            ->read()
+            ->important()
+            ->neverSpam()
+            ->star();
+
+        $this->assertSame([
+            'excludeChats' => 'true',
+            'from' => ['foo@example.com', 'bar@example.com'],
+            'hasTheWord' => 'Something',
+        ], $filter->getConditions());
+
+        $this->assertSame([
+            'label' => 'Foo',
+            'markAsRead' => 'true',
+            'shouldAlwaysMarkAsImportant' => 'true',
+            'shouldArchive' => 'true',
+            'shouldNeverSpam' => 'true',
+            'shouldSpam' => 'false',
+            'shouldStar' => 'true',
+        ], $filter->getActions());
     }
 }

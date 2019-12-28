@@ -88,13 +88,16 @@ class Builder
      */
     private function buildEntry(Filter $filter): string
     {
-        $entry = collect($filter->toArray())
-            ->map(function ($value, $key): string {
-                return $this->buildProperty($value, $key);
-            })
-            ->implode($this->glue());
+        $conditions = $filter->getConditions();
+        $actions = $filter->getActions();
 
-        return collect(['<entry>', $entry, '</entry>'])->implode($this->glue());
+        $entry = collect();
+
+        foreach (array_merge($conditions, $actions) as $property => $value) {
+            $entry->push($this->buildProperty($value, $property));
+        }
+
+        return collect(['<entry>', $entry->implode($this->glue()), '</entry>'])->implode($this->glue());
     }
 
     /**

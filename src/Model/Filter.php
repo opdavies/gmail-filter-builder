@@ -10,7 +10,12 @@ class Filter
     /**
      * @var array
      */
-    private $properties = [];
+    private $conditions = [];
+
+    /**
+     * @var array
+     */
+    private $actions = [];
 
     /**
      * @return static
@@ -27,7 +32,7 @@ class Filter
      */
     public function has(string $value): self
     {
-        $this->properties['hasTheWord'] = $value;
+        $this->conditions['hasTheWord'] = $value;
 
         return $this;
     }
@@ -39,7 +44,7 @@ class Filter
      */
     public function hasNot(string $value): self
     {
-        $this->properties['doesNotHaveTheWord'] = $value;
+        $this->conditions['doesNotHaveTheWord'] = $value;
 
         return $this;
     }
@@ -52,7 +57,7 @@ class Filter
     public function from($values): self
     {
         if (!empty($values)) {
-            $this->properties['from'] = collect($values)->map(function ($value) {
+            $this->conditions['from'] = collect($values)->map(function ($value) {
                 return trim($value);
             })->all();
         }
@@ -68,7 +73,7 @@ class Filter
     public function to($values): self
     {
         if (!empty($values)) {
-            $this->properties['to'] = collect($values)->map(function ($value) {
+            $this->conditions['to'] = collect($values)->map(function ($value) {
                 return trim($value);
             })->all();
         }
@@ -83,7 +88,7 @@ class Filter
      */
     public function subject($values): self
     {
-        $this->properties['subject'] = collect($values)->map(function ($value) {
+        $this->conditions['subject'] = collect($values)->map(function ($value) {
             return json_encode($value);
         })->implode('|');
 
@@ -95,7 +100,7 @@ class Filter
      */
     public function hasAttachment(): self
     {
-        $this->properties['hasAttachment'] = 'true';
+        $this->conditions['hasAttachment'] = 'true';
 
         return $this;
     }
@@ -120,7 +125,7 @@ class Filter
      */
     public function excludeChats(): self
     {
-        $this->properties['excludeChats'] = 'true';
+        $this->conditions['excludeChats'] = 'true';
 
         return $this;
     }
@@ -132,7 +137,7 @@ class Filter
      */
     public function label(string $label): self
     {
-        $this->properties['label'] = $label;
+        $this->actions['label'] = $label;
 
         return $this;
     }
@@ -142,7 +147,7 @@ class Filter
      */
     public function archive(): self
     {
-        $this->properties['shouldArchive'] = 'true';
+        $this->actions['shouldArchive'] = 'true';
 
         return $this;
     }
@@ -164,8 +169,8 @@ class Filter
      */
     public function spam(): self
     {
-        $this->properties['shouldSpam'] = 'true';
-        $this->properties['shouldNeverSpam'] = 'false';
+        $this->actions['shouldSpam'] = 'true';
+        $this->actions['shouldNeverSpam'] = 'false';
 
         return $this;
     }
@@ -175,8 +180,8 @@ class Filter
      */
     public function neverSpam(): self
     {
-        $this->properties['shouldSpam'] = 'false';
-        $this->properties['shouldNeverSpam'] = 'true';
+        $this->actions['shouldSpam'] = 'false';
+        $this->actions['shouldNeverSpam'] = 'true';
 
         return $this;
     }
@@ -186,7 +191,7 @@ class Filter
      */
     public function trash(): self
     {
-        $this->properties['shouldTrash'] = 'true';
+        $this->actions['shouldTrash'] = 'true';
 
         return $this;
     }
@@ -196,7 +201,7 @@ class Filter
      */
     public function read(): self
     {
-        $this->properties['markAsRead'] = 'true';
+        $this->actions['markAsRead'] = 'true';
 
         return $this;
     }
@@ -206,7 +211,7 @@ class Filter
      */
     public function star(): self
     {
-        $this->properties['shouldStar'] = 'true';
+        $this->actions['shouldStar'] = 'true';
 
         return $this;
     }
@@ -218,7 +223,7 @@ class Filter
      */
     public function forward(string $to): self
     {
-        $this->properties['forwardTo'] = $to;
+        $this->actions['forwardTo'] = $to;
 
         return $this;
     }
@@ -228,7 +233,7 @@ class Filter
      */
     public function important(): self
     {
-        $this->properties['shouldAlwaysMarkAsImportant'] = 'true';
+        $this->actions['shouldAlwaysMarkAsImportant'] = 'true';
 
         return $this;
     }
@@ -238,7 +243,7 @@ class Filter
      */
     public function notImportant(): self
     {
-        $this->properties['shouldNeverMarkAsImportant'] = 'true';
+        $this->actions['shouldNeverMarkAsImportant'] = 'true';
 
         return $this;
     }
@@ -250,29 +255,43 @@ class Filter
      */
     public function categorise(string $category): self
     {
-        $this->properties['smartLabelToApply'] = $category;
+        $this->actions['smartLabelToApply'] = $category;
 
         return $this;
     }
 
     /**
-     * Return the filter properties as an array.
-     *
-     * @return array
-     * @deprecated toArray()
+     * @deprecated
+     * @see toArray()
      */
     public function getProperties(): array
     {
-        return $this->properties;
+        return $this->toArray();
+    }
+
+    public function getConditions(): array
+    {
+        $conditions = $this->conditions;
+        ksort($conditions);
+
+        return $conditions;
+    }
+
+    public function getActions(): array
+    {
+        $actions = $this->actions;
+        ksort($actions);
+
+        return $actions;
     }
 
     /**
-     * Return the filter properties as an array.
-     *
-     * @return array
+     * @deprecated
+     * @see getConditions()
+     * @see getActions()
      */
     public function toArray(): array
     {
-        return $this->properties;
+        return array_merge($this->conditions, $this->actions);
     }
 }

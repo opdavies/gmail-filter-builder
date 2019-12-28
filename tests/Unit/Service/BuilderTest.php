@@ -33,8 +33,8 @@ class BuilderTest extends TestCase
 </entry>
 <entry>
 <apps:property name='hasTheWord' value='from:bar@example.com'/>
-<apps:property name='shouldStar' value='true'/>
 <apps:property name='shouldAlwaysMarkAsImportant' value='true'/>
+<apps:property name='shouldStar' value='true'/>
 </entry>
 </feed>
 EOF;
