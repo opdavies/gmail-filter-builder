@@ -2,6 +2,9 @@
 
 namespace Opdavies\GmailFilterBuilder\Model;
 
+use Opdavies\GmailFilterBuilder\Enum\FilterAction;
+use Opdavies\GmailFilterBuilder\Enum\FilterCondition;
+
 class Filter
 {
     /** @var string */
@@ -32,7 +35,7 @@ class Filter
      */
     public function has(string $value): self
     {
-        $this->conditions['hasTheWord'] = $value;
+        $this->conditions[FilterCondition::HAS_WORD] = $value;
 
         return $this;
     }
@@ -44,7 +47,7 @@ class Filter
      */
     public function hasNot(string $value): self
     {
-        $this->conditions['doesNotHaveTheWord'] = $value;
+        $this->conditions[FilterCondition::DOES_NOT_HAVE_WORD] = $value;
 
         return $this;
     }
@@ -57,7 +60,7 @@ class Filter
     public function from($values): self
     {
         if (!empty($values)) {
-            $this->conditions['from'] = collect($values)->map(function ($value) {
+            $this->conditions[FilterCondition::FROM] = collect($values)->map(function ($value) {
                 return trim($value);
             })->all();
         }
@@ -73,7 +76,7 @@ class Filter
     public function to($values): self
     {
         if (!empty($values)) {
-            $this->conditions['to'] = collect($values)->map(function ($value) {
+            $this->conditions[FilterCondition::TO] = collect($values)->map(function ($value) {
                 return trim($value);
             })->all();
         }
@@ -88,7 +91,7 @@ class Filter
      */
     public function subject($values): self
     {
-        $this->conditions['subject'] = collect($values)->map(function ($value) {
+        $this->conditions[FilterCondition::SUBJECT] = collect($values)->map(function ($value) {
             return json_encode($value);
         })->implode('|');
 
@@ -100,7 +103,7 @@ class Filter
      */
     public function hasAttachment(): self
     {
-        $this->conditions['hasAttachment'] = 'true';
+        $this->conditions[FilterCondition::HAS_ATTACHMENT] = 'true';
 
         return $this;
     }
@@ -115,7 +118,7 @@ class Filter
     public function fromList($value): self
     {
         $value = collect($value)->implode(self::SEPARATOR);
-        $this->has("list:{$value}");
+        $this->has(FilterCondition::FROM_LIST . ":{$value}");
 
         return $this;
     }
@@ -125,7 +128,7 @@ class Filter
      */
     public function excludeChats(): self
     {
-        $this->conditions['excludeChats'] = 'true';
+        $this->conditions[FilterCondition::EXCLUDE_CHATS] = 'true';
 
         return $this;
     }
@@ -137,7 +140,7 @@ class Filter
      */
     public function label(string $label): self
     {
-        $this->actions['label'] = $label;
+        $this->actions[FilterAction::ADD_LABEL] = $label;
 
         return $this;
     }
@@ -147,7 +150,7 @@ class Filter
      */
     public function archive(): self
     {
-        $this->actions['shouldArchive'] = 'true';
+        $this->actions[FilterAction::ARCHIVE] = 'true';
 
         return $this;
     }
@@ -169,8 +172,8 @@ class Filter
      */
     public function spam(): self
     {
-        $this->actions['shouldSpam'] = 'true';
-        $this->actions['shouldNeverSpam'] = 'false';
+        $this->actions[FilterAction::MARK_AS_SPAM] = 'true';
+        $this->actions[FilterAction::NEVER_MARK_AS_SPAM] = 'false';
 
         return $this;
     }
@@ -180,8 +183,8 @@ class Filter
      */
     public function neverSpam(): self
     {
-        $this->actions['shouldSpam'] = 'false';
-        $this->actions['shouldNeverSpam'] = 'true';
+        $this->actions[FilterAction::MARK_AS_SPAM] = 'false';
+        $this->actions[FilterAction::NEVER_MARK_AS_SPAM] = 'true';
 
         return $this;
     }
@@ -191,7 +194,7 @@ class Filter
      */
     public function trash(): self
     {
-        $this->actions['shouldTrash'] = 'true';
+        $this->actions[FilterAction::TRASH] = 'true';
 
         return $this;
     }
@@ -201,7 +204,7 @@ class Filter
      */
     public function read(): self
     {
-        $this->actions['markAsRead'] = 'true';
+        $this->actions[FilterAction::MARK_AS_READ] = 'true';
 
         return $this;
     }
@@ -211,7 +214,7 @@ class Filter
      */
     public function star(): self
     {
-        $this->actions['shouldStar'] = 'true';
+        $this->actions[FilterAction::STAR] = 'true';
 
         return $this;
     }
@@ -223,7 +226,7 @@ class Filter
      */
     public function forward(string $to): self
     {
-        $this->actions['forwardTo'] = $to;
+        $this->actions[FilterAction::FORWARD_TO] = $to;
 
         return $this;
     }
@@ -233,7 +236,7 @@ class Filter
      */
     public function important(): self
     {
-        $this->actions['shouldAlwaysMarkAsImportant'] = 'true';
+        $this->actions[FilterAction::ALWAYS_MARK_AS_IMPORTANT] = 'true';
 
         return $this;
     }
@@ -243,7 +246,7 @@ class Filter
      */
     public function notImportant(): self
     {
-        $this->actions['shouldNeverMarkAsImportant'] = 'true';
+        $this->actions[FilterAction::NEVER_MARK_AS_IMPORTANT] = 'true';
 
         return $this;
     }
@@ -255,7 +258,7 @@ class Filter
      */
     public function categorise(string $category): self
     {
-        $this->actions['smartLabelToApply'] = $category;
+        $this->actions[FilterAction::ADD_CATEGORY] = $category;
 
         return $this;
     }
