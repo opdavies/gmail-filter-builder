@@ -14,5 +14,5 @@ $container = new Container();
 
 /** @var Application $application */
 $application = $container->get(Application::class);
-$application->setDefaultCommand(GenerateCommand::NAME);
+$application->setDefaultCommand(GenerateCommand::getDefaultName());
 $application->run();

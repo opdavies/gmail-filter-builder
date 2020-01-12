@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateCommand extends Command
 {
-    const NAME = 'generate';
+    protected static $defaultName = 'generate';
 
     /**
      * {@inheritdoc}
@@ -21,7 +21,6 @@ class GenerateCommand extends Command
     public function configure()
     {
         $this
-            ->setName(self::NAME)
             ->setDescription('Generates XML for Gmail filters.')
             ->addOption('input-file', 'i', InputOption::VALUE_OPTIONAL, 'The name of the PHP file containing your filters.', 'filters.php')
             ->addOption('output-file', 'o', InputOption::VALUE_OPTIONAL, 'The name of the XML file to generate.')
