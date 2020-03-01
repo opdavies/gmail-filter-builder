@@ -5,7 +5,7 @@ namespace Opdavies\Tests\GmailFilterBuilder\Service;
 use Opdavies\GmailFilterBuilder\Exception\PartialNotFoundException;
 use Opdavies\GmailFilterBuilder\Service\Addresses;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 /**
  * Test loading addresses from a separate file.
