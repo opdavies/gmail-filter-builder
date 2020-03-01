@@ -3,7 +3,7 @@
 namespace Opdavies\GmailFilterBuilder\Service;
 
 use Opdavies\GmailFilterBuilder\Exception\PartialNotFoundException;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 /**
  * A service for loading addresses from separate files.

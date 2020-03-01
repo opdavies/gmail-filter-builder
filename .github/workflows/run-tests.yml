@@ -1,0 +1,47 @@
+name: Run tests
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [7.4, 7.3, 7.2]
+        dependency-version: [prefer-lowest, prefer-stable]
+        os: [ubuntu-latest, windows-latest]
+
+    name: "PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-composer-${{ hashFiles('composer.json') }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: |
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+          composer update sebastian/comparator
+
+      - name: Configure matchers
+        uses: mheap/phpunit-matcher-action@master
+
+      - name: Execute tests
+        run: vendor/bin/phpunit --teamcity
