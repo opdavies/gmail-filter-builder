@@ -14,7 +14,7 @@
         "symfony/console": "^3.4",
         "symfony/dependency-injection": "^3.4",
         "symfony/filesystem": "^3.4",
-        "symfony/yaml": "^3.4",
+        "symfony/yaml": "^3.4 || ^4.0",
         "tightenco/collect": "^5.4"
     },
     "require-dev": {
