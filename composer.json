@@ -11,7 +11,7 @@
     ],
     "require": {
         "symfony/config": "^3.4",
-        "symfony/console": "^3.4",
+        "symfony/console": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4",
         "symfony/filesystem": "^3.4",
         "symfony/yaml": "^3.4",
