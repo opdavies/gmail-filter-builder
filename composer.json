@@ -15,7 +15,7 @@
         "symfony/dependency-injection": "^3.4",
         "symfony/filesystem": "^3.4",
         "symfony/yaml": "^3.4",
-        "tightenco/collect": "^5.4"
+        "tightenco/collect": "^5.4 || ^7.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.11",
