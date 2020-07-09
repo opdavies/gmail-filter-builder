@@ -37,7 +37,9 @@ class GenerateCommand extends Command
         $inputFile = $input->getOption('input-file');
         $outputFile = $input->getOption('output-file');
 
-        if (file_exists(__DIR__.'/'.$inputFile)) {
+        if (file_exists($inputFile)) {
+            $filters = require_once $inputFile;
+        } elseif (file_exists(__DIR__.'/'.$inputFile)) {
             $filters = require_once __DIR__.'/'.$inputFile;
         } elseif (file_exists(__DIR__.'/../../../../../../'.$inputFile)) {
             # Installed as a dependency within "vendor".
