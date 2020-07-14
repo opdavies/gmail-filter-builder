@@ -1,0 +1,30 @@
+---
+name: Release
+
+on:
+  push:
+    tags:
+
+jobs:
+  build:
+    name: Create a new release
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: "Determine tag"
+        id: "determine-tag"
+        run: "echo \"::set-output name=tag::${GITHUB_REF#refs/tags/}\""
+
+      - name: "Create release"
+        uses: "actions/create-release@v1.1.1"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          draft: false
+          prerelease: false
+          release_name: "${{ steps.determine-tag.outputs.tag }}"
+          tag_name: "${{ steps.determine-tag.outputs.tag }}"
