@@ -116,7 +116,7 @@ class Builder
 
         return vsprintf("<apps:property name='%s' value='%s'/>", [
             $key,
-            htmlentities($this->implode($value)),
+            htmlentities($this->implode($value), ENT_QUOTES | ENT_XML1),
         ]);
     }
 
