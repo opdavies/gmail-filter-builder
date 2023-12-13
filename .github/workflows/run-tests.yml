@@ -44,4 +44,4 @@ jobs:
         uses: mheap/phpunit-matcher-action@main
 
       - name: Execute tests
-        run: vendor/bin/phpunit --teamcity
+        run: vendor/bin/phpunit
