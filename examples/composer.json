@@ -1,6 +1,6 @@
 {
     "require": {
-        "opdavies/gmail-filter-builder": "^1.1"
+        "opdavies/gmail-filter-builder": "3.x-dev"
     },
     "scripts": {
         "generate": "generate-filters"

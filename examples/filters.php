@@ -1,15 +1,15 @@
 <?php
 
-use Opdavies\GmailFilterBuilder\Filter;
-
 require_once __DIR__ . '/vendor/autoload.php';
 
+use function Opdavies\GmailFilterBuilder\filter;
+
 return [
-    Filter::create()
+    filter()
         ->from('foo@example.com')
         ->labelAndArchive('Example'),
 
-    Filter::create()
+    filter()
         ->from('bar@example.com')
         ->important(),
 ];
