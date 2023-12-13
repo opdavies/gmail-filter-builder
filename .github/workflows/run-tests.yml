@@ -41,7 +41,7 @@ jobs:
           composer update sebastian/comparator
 
       - name: Configure matchers
-        uses: mheap/phpunit-matcher-action@master
+        uses: mheap/phpunit-matcher-action@main
 
       - name: Execute tests
         run: vendor/bin/phpunit --teamcity
