@@ -19,7 +19,7 @@ class GenerateFiltersTest extends TestCase
     /** @var Filesystem */
     private $fs;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +32,7 @@ class GenerateFiltersTest extends TestCase
         chdir(self::TEST_OUTPUT_DIR);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         chdir('..');
         $this->fs->remove(self::TEST_OUTPUT_DIR);

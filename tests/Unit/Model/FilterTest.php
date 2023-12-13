@@ -20,7 +20,7 @@ class FilterTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->filter = new Filter();
     }

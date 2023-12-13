@@ -43,6 +43,8 @@ class GenerateCommand extends Command
         } catch (IOException $e) {
             $io->error($e->getMessage());
         }
+
+        return Command::SUCCESS;
     }
 
     private function outputFile(InputInterface $input): string
